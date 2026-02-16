@@ -4,7 +4,6 @@ import com.example.gorilladesk.adapter.dto.resource.ApiResponse;
 import com.example.gorilladesk.application.service.label.ILabelService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +13,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/labels")
-@CrossOrigin(origins = "http://localhost:5173")
 public class LabelResource {
 
     private final ILabelService labelService;
