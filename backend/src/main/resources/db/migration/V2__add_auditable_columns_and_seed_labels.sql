@@ -1,0 +1,8 @@
+-- Columnas de auditoría requeridas por la entidad Label (Auditable)
+ALTER TABLE app_label
+    ADD COLUMN IF NOT EXISTS creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    ADD COLUMN IF NOT EXISTS creation_user VARCHAR(255) NOT NULL DEFAULT 'system',
+    ADD COLUMN IF NOT EXISTS last_modified_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    ADD COLUMN IF NOT EXISTS last_modified_user VARCHAR(255) NOT NULL DEFAULT 'system',
+    ADD COLUMN IF NOT EXISTS is_deleted BOOLEAN NOT NULL DEFAULT false,
+    ADD COLUMN IF NOT EXISTS is_enabled BOOLEAN NOT NULL DEFAULT true;
