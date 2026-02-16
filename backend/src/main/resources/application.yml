@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: gorilladesk-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gorilladesk
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  # Flyway para el esquema; desactivamos schema.sql/data.sql
+  sql:
+    init:
+      mode: never
+
+server:
+  port: 8080
+
+# CORS: origen permitido del frontend (Vite por defecto en 5173)
+application:
+  front_end:
+    host: http://localhost:5173
