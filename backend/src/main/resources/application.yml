@@ -24,3 +24,7 @@ server:
 application:
   front_end:
     host: http://localhost:5173
+  security:
+    jwt:
+      # Clave Base64 para HS256 (mín. 32 bytes). En producción usar variable de entorno.
+      secret_key: bG9ycmVsYS0zMi1ieXRlcy1zZWNyZXQta2V5LWZvci1oczI1Ng==
