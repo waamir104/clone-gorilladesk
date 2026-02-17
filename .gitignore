@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Frontend (Vite / Node)
+frontend/dist/
+frontend/node_modules/
+*.local
+.vite/
+
+# Backend (Java / Maven)
+backend/target/
+*.jar
+*.war
+*.class
+*.iml
+.idea/
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+*.log
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# OS & Windows artifacts
+.DS_Store
+Thumbs.db
+nul
+
+# Logs & temp
+*.log
+*.tmp
+*.temp
+*.swp
+*~
