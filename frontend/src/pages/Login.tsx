@@ -1,6 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Login = () => {
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate("/app");
+  };
+
   return (
     <div className="login-page">
       <div className="login-card">
@@ -25,7 +32,7 @@ export const Login = () => {
           <span>Or</span>
         </div>
 
-        <form className="login-form" onSubmit={(e) => e.preventDefault()}>
+        <form className="login-form" onSubmit={handleSubmit}>
           <input
             type="text"
             name="username"
