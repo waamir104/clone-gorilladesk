@@ -4,6 +4,15 @@
   padding: 0;
 }
 
+/* Light theme (default) */
+:root {
+  --primary-btn-bg: rgb(24, 173, 89);
+  --primary-btn-color: #fff;
+  --primary-btn-hover-bg: rgb(20, 140, 72);
+  --selected-bg: #554b63;
+  --selected-color: #fff;
+}
+
 html,
 body {
   overflow-x: hidden;
@@ -11,9 +20,9 @@ body {
 }
 
 #root {
-  overflow-x: hidden;
+  overflow-x: auto;
   max-width: 100%;
-  min-width: 0;
+  min-width: 1020px;
 }
 
 /* Google Material Icons */
@@ -234,11 +243,11 @@ section p {
 }
 
 .sidebar-container .menu-item.is-active .menu-item__icon {
-  background: rgba(var(--utility-color), 0.12);
+  background: var(--selected-bg);
 }
 
 .sidebar-container .menu-item.is-active .menu-item__icon .material-symbols-outlined {
-  color: rgb(var(--utility-color));
+  color: var(--selected-color);
   font-size: 22px;
 }
 
@@ -398,8 +407,8 @@ section p {
   width: 32px;
   height: 32px;
   border-radius: 10px;
-  background: rgba(var(--utility-color), 0.12);
-  color: rgb(var(--utility-color));
+  background: var(--selected-bg);
+  color: var(--selected-color);
   font-size: 22px;
   flex-shrink: 0;
 }
@@ -495,13 +504,13 @@ section p {
   height: 32px;
   border: none;
   border-radius: 8px;
-  background: #7c3aed;
-  color: #fff;
+  background: var(--primary-btn-bg);
+  color: var(--primary-btn-color);
   cursor: pointer;
 }
 
 .header-v2 .wrap-btn-primary .btn-primary:hover {
-  background: #6d28d9;
+  background: var(--primary-btn-hover-bg);
 }
 
 .header-v2 .is-divider {
@@ -541,6 +550,76 @@ section p {
   background: #fff;
   cursor: pointer;
   color: #374151;
+}
+
+.header-v2 .dropdown-dark-mode .dropbtn.--sm {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.header-v2 .dropdown-dark-mode .dropbtn.--sm .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* Mode dropdown content */
+.header-v2 .v2-dropdown__menu--mode .mode-dropdown__content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  min-width: 200px;
+}
+.header-v2 .v2-dropdown__menu--mode .mode-dropdown__content .flex-1 {
+  flex: 1;
+}
+.header-v2 .v2-dropdown__menu--mode .mode-dropdown__content .black {
+  color: #1f2933;
+}
+.header-v2 .v2-dropdown__menu--mode .mode-dropdown__content .fw-500 {
+  font-weight: 500;
+}
+.header-v2 .v2-dropdown__menu--mode .tabs .tab-selectors {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.header-v2 .v2-dropdown__menu--mode .tab-selectors.btn-item.ml-0 {
+  margin-left: 0;
+}
+.header-v2 .v2-dropdown__menu--mode .tab-items {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.8125rem;
+  color: #374151;
+}
+.header-v2 .v2-dropdown__menu--mode .tab-items:hover {
+  background: #f3f4f6;
+}
+.header-v2 .v2-dropdown__menu--mode .tab-items.active-tab-selector {
+  background: var(--selected-bg);
+  border-color: var(--selected-bg);
+  color: var(--selected-color);
+}
+.header-v2 .v2-dropdown__menu--mode .tab-items.active-tab-selector svg {
+  color: var(--selected-color);
+}
+.header-v2 .v2-dropdown__menu--mode .tab-items.active-tab-selector path {
+  fill: var(--selected-color);
+}
+.header-v2 .v2-dropdown__menu--mode .tab-items.active-tab-selector [stroke] {
+  stroke: var(--selected-color);
+}
+.header-v2 .v2-dropdown__menu--mode .tab-items svg {
+  flex-shrink: 0;
 }
 
 .header-v2 .nav-user .dropbtn.nav {
@@ -593,6 +672,14 @@ section p {
   display: block;
 }
 
+/* Mode dropdown: open only on click, close on click outside */
+.header-v2 .v2-dropdown.mode-dropdown .v2-dropdown__menu {
+  display: none;
+}
+.header-v2 .v2-dropdown.mode-dropdown.is-open .v2-dropdown__menu {
+  display: block;
+}
+
 .header-v2 .v2-dropdown__menu.--right {
   left: auto;
   right: 0;
@@ -629,12 +716,12 @@ section p {
 }
 
 .header-v2 .v2-dropdown__menu .items.is-selected {
-  background: rgba(var(--utility-color), 0.12);
+  background: var(--selected-bg);
 }
 .header-v2 .v2-dropdown__menu .items.is-selected .nav-dropdown-link,
 .header-v2 .v2-dropdown__menu .items.is-selected .nav-dropdown-link .material-symbols-outlined,
 .header-v2 .v2-dropdown__menu .items.is-selected .nav-dropdown-link span {
-  color: rgb(var(--utility-color));
+  color: var(--selected-color);
 }
 
 .header-v2 .v2-dropdown__menu .items a,
@@ -665,11 +752,11 @@ section p {
 }
 
 .header-v2 .v2-dropdown__menu .items.is-selected .nav-dropdown-link__icon {
-  background: rgba(var(--utility-color), 0.12);
+  background: var(--selected-bg);
 }
 
 .header-v2 .v2-dropdown__menu .items.is-selected .nav-dropdown-link__icon .material-symbols-outlined {
-  color: rgb(var(--utility-color));
+  color: var(--selected-color);
 }
 
 .header-v2 .v2-dropdown__menu .nav-dropdown-link .material-symbols-outlined:first-of-type {
@@ -857,4 +944,121 @@ section p {
 .login-link-reset {
   display: block;
   margin-top: 0.5rem;
+}
+
+/* ========== Dark theme ========== */
+.theme-dark {
+  --primary-btn-bg: rgb(24, 173, 89);
+  --primary-btn-color: #fff;
+  --primary-btn-hover-bg: rgb(20, 140, 72);
+  --selected-bg: rgba(176, 168, 181, 0.2);
+  --selected-color: rgb(176, 168, 181);
+  --text-color: rgb(250, 246, 240);
+}
+
+.theme-dark .header-v2 {
+  background: rgb(10, 12, 13);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+  color: var(--text-color);
+}
+
+/* Header: bg rgb(10, 12, 13) en dark theme para estos elementos */
+.theme-dark .header-v2 .nav-help .dropbtn,
+.theme-dark .header-v2 .dropdown-dark-mode .dropbtn,
+.theme-dark .header-v2 .calendar-dropdown .dropbtn,
+.theme-dark .header-v2 .nav-user .dropbtn,
+.theme-dark .header-v2 .search-form .key.absolute,
+.theme-dark .header-v2 .dropbtn,
+.theme-dark .header-v2 .search-ip,
+.theme-dark .header-v2 .v2-dropdown__menu,
+.theme-dark .header-v2 .v2-dropdown__menu .items,
+.theme-dark .header-v2 .v2-dropdown__menu--mode .mode-dropdown__content,
+.theme-dark .header-v2 .v2-dropdown__menu--mode .tab-items {
+  background: rgb(10, 12, 13);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.theme-dark .header-v2 .calendar-dropdown .dropbtn .nav-selector-icon {
+  background: rgb(10, 12, 13);
+}
+
+/* Dark theme: color de selección rgb(176, 168, 181) en iconos de selección */
+.theme-dark .header-v2 .calendar-dropdown .dropbtn .nav-selector-icon,
+.theme-dark .header-v2 .calendar-dropdown .dropbtn .nav-selector-icon.material-symbols-outlined {
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .header-v2 .v2-dropdown__menu .items.is-selected .nav-dropdown-link,
+.theme-dark .header-v2 .v2-dropdown__menu .items.is-selected .nav-dropdown-link__icon,
+.theme-dark .header-v2 .v2-dropdown__menu .items.is-selected .nav-dropdown-link__icon .material-symbols-outlined,
+.theme-dark .header-v2 .v2-dropdown__menu .items.is-selected .nav-dropdown-link span {
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .sidebar-container .menu-item.is-active .menu-item__icon,
+.theme-dark .sidebar-container .menu-item.is-active .menu-item__icon .material-symbols-outlined {
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .header-v2 .search-form .key.absolute {
+  color: var(--text-color);
+}
+
+.theme-dark .header-v2 .search-ip:focus {
+  background: rgb(10, 12, 13);
+}
+
+.theme-dark .header-v2 .nav__label,
+.theme-dark .header-v2 .dropbtn,
+.theme-dark .header-v2 .search-ip,
+.theme-dark .header-v2 .search-ip::placeholder,
+.theme-dark .header-v2 .txt-ellipsis,
+.theme-dark .header-v2 .v2-dropdown__menu,
+.theme-dark .header-v2 .v2-dropdown__menu .nav-dropdown-link,
+.theme-dark .header-v2 .v2-dropdown__menu .items {
+  color: var(--text-color);
+}
+
+.theme-dark .header-v2 .v2-dropdown__menu .items:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.theme-dark .header-v2 .v2-dropdown__menu .items.is-selected {
+  background: rgb(10, 12, 13);
+}
+
+.theme-dark .header-v2 .v2-dropdown__menu .items.is-selected .nav-dropdown-link__icon {
+  background: rgba(176, 168, 181, 0.2);
+}
+
+.theme-dark .header-v2 .v2-dropdown__menu--mode .tab-items:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.theme-dark .header-v2 .v2-dropdown__menu--mode .tab-items.active-tab-selector {
+  background: rgb(10, 12, 13);
+}
+
+.theme-dark .header-v2 .boxs-notification .notify-btn {
+  background: rgb(10, 12, 13);
+  color: var(--text-color);
+}
+
+.theme-dark .header-v2 .is-divider {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.theme-dark .sidebar-container {
+  background: rgb(19, 22, 23);
+  border-right-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-color);
+}
+
+.theme-dark .sidebar-container .menu-item {
+  color: var(--text-color);
+}
+
+.theme-dark .app-main-content {
+  background: rgb(19, 22, 23);
+  color: var(--text-color);
 }
