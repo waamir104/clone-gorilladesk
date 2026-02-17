@@ -35,5 +35,21 @@ public class LabelResource {
 
         return ResponseEntity.ok(apiResponse);
     }
+
+    @GetMapping("/app")
+    public ResponseEntity<ApiResponse<Map<String, String>>> getAppLabels(
+            @RequestParam(name = "lang", defaultValue = "es") String lang
+    ) {
+        Map<String, String> labels = labelService.getLabelsByLanguage(lang);
+
+        ApiResponse<Map<String, String>> apiResponse = ApiResponse.<Map<String, String>>builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Labels retrieved successfully")
+                .data(labels)
+                .build();
+
+        return ResponseEntity.ok(apiResponse);
+    }
+
 }
 
