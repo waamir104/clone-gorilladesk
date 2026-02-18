@@ -84,14 +84,21 @@ export const Header = ({ isSidebarOpen = true, onToggleSidebar }: HeaderProps) =
           <div className="collapse-sidebar">
             <button
               type="button"
-              className="btn-sidebar items-collapse"
+              className={`btn-sidebar items-collapse${isSidebarOpen ? " active" : ""}`}
               onClick={() => onToggleSidebar?.()}
               aria-label={isSidebarOpen ? "Ocultar menú" : "Mostrar menú"}
               aria-expanded={isSidebarOpen}
             >
-              <span className="material-symbols-outlined">
-                {isSidebarOpen ? "menu_open" : "menu"}
-              </span>
+              <div className="default">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                  <path fillRule="evenodd" clipRule="evenodd" d="M15 16C15.5523 16 16 16.4477 16 17C16 17.5523 15.5523 18 15 18H5C4.44772 18 4 17.5523 4 17C4 16.4477 4.44772 16 5 16H15ZM19 11C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11H19ZM19 6C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8H5C4.44772 8 4 7.55228 4 7C4 6.44772 4.44772 6 5 6H19Z" fill="var(--color-icon)" />
+                </svg>
+              </div>
+              <div className="active">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                  <path fillRule="evenodd" clipRule="evenodd" d="M10.2929 5.29289C10.6834 4.90237 11.3166 4.90237 11.7071 5.29289C12.0976 5.68342 12.0976 6.31658 11.7071 6.70711L6.41421 12L11.7071 17.2929C12.0976 17.6834 12.0976 18.3166 11.7071 18.7071C11.3166 19.0976 10.6834 19.0976 10.2929 18.7071L4.29289 12.7071C3.90237 12.3166 3.90237 11.6834 4.29289 11.2929L10.2929 5.29289ZM19 16C19.5523 16 20 16.4477 20 17C20 17.5523 19.5523 18 19 18H15C14.4477 18 14 17.5523 14 17C14 16.4477 14.4477 16 15 16H19ZM19 11C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H10C9.44772 13 9 12.5523 9 12C9 11.4477 9.44772 11 10 11H19ZM19 6C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8H15C14.4477 8 14 7.55228 14 7C14 6.44772 14.4477 6 15 6H19Z" fill="var(--color-icon)" />
+                </svg>
+              </div>
             </button>
           </div>
           <Link className="logo" to="/app">
