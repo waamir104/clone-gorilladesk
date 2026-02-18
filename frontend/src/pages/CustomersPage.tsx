@@ -111,7 +111,7 @@ export const CustomersPage = () => {
   };
 
   return (
-    <div id="wrapper-customer-list" className="container-wrap container-table custom-grid-sidebar container-customer-list">
+    <div id="wrapper-customer-list" className="container-wrap container-table custom-grid-sidebar container-customer-list customer-list-dark">
       {/* Left sidebar - customer list filters */}
       <div id="wrapper-side-menu-customer-list" className="sidebar-menu sidebar-left scrolls customer-list-sidebar">
         <ul className="sidebar-menu__nav flex-column">
@@ -139,7 +139,7 @@ export const CustomersPage = () => {
                       )}
                     </div>
                     {!item.disabled && item.count !== undefined && (
-                      <p className="count" title={String(item.count)}>
+                      <p className={`count ${item.lead ? "count--lead" : ""}`} title={String(item.count)}>
                         {item.count}
                       </p>
                     )}
@@ -241,7 +241,7 @@ export const CustomersPage = () => {
                       <span className="arrow"><ArrowDownIcon /></span>
                     </div>
                   </div>
-                  <div className="header-items has-bg-blue v2-dropdown">
+                  <div className="header-items v2-dropdown">
                     <div tabIndex={0} className="dropbtn v2-btn-default">
                       <span className="txt-ellipsis">First name</span>
                       <span className="arrow"><ArrowDownIcon /></span>
