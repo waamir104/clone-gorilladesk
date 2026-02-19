@@ -1,5 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
+
+type SortColumn = "customer" | "email" | "company" | "balance";
+type SortDirection = "asc" | "desc";
+
+function parseBalance(value: string): number {
+  const cleaned = (value || "").replace(/[$,]/g, "").trim();
+  const n = parseFloat(cleaned);
+  return Number.isNaN(n) ? 0 : n;
+}
 
 const InfoIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,23 +33,9 @@ const SearchIcon = () => (
   </svg>
 );
 
-const ImportIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4.5 10.5V7.5C4.5 6.39543 5.39543 5.5 6.5 5.5H16.5C17.6046 5.5 18.5 6.39543 18.5 7.5V10.5" stroke="var(--color-icon)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M11.5 19.5L11.5 10.5" stroke="var(--color-icon)" strokeWidth="1.3" strokeLinecap="round" />
-    <path d="M16 15L11.5 10.5L7 15" stroke="var(--color-icon)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
 const ArrowDownIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M4.5 7.5L8 11L11.5 7.5" stroke="var(--color-icon)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const SortCaretIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path fillRule="evenodd" clipRule="evenodd" d="M7.46967 5.21967C7.76256 4.92678 8.23744 4.92678 8.53033 5.21967L12.0303 8.71967C12.3232 9.01256 12.3232 9.48744 12.0303 9.78033C11.7374 10.0732 11.2626 10.0732 10.9697 9.78033L8 6.81066L5.03033 9.78033C4.73744 10.0732 4.26256 10.0732 3.96967 9.78033C3.67678 9.48744 3.67678 9.01256 3.96967 8.71967L7.46967 5.21967Z" fill="currentColor" />
   </svg>
 );
 
@@ -87,6 +82,36 @@ export const CustomersPage = () => {
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [selectAll, setSelectAll] = useState(false);
   const [activeSidebarId, setActiveSidebarId] = useState<string>("total");
+  const [internalSidebarOpen, setInternalSidebarOpen] = useState(true);
+  const [sortColumn, setSortColumn] = useState<SortColumn | null>(null);
+  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+
+  const sortedCustomers = useMemo(() => {
+    if (!sortColumn) return [...MOCK_CUSTOMERS];
+    return [...MOCK_CUSTOMERS].sort((a, b) => {
+      let cmp = 0;
+      switch (sortColumn) {
+        case "customer":
+          cmp = (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: "base" });
+          break;
+        case "email":
+          cmp = (a.email || "").localeCompare(b.email || "", undefined, { sensitivity: "base" });
+          break;
+        case "company":
+          cmp = (a.company || "").localeCompare(b.company || "", undefined, { sensitivity: "base" });
+          break;
+        case "balance":
+          cmp = parseBalance(a.balance) - parseBalance(b.balance);
+          break;
+      }
+      return sortDirection === "asc" ? cmp : -cmp;
+    });
+  }, [sortColumn, sortDirection]);
+
+  const handleSort = (column: SortColumn, direction: SortDirection) => {
+    setSortColumn(column);
+    setSortDirection(direction);
+  };
 
   const toggleRow = (id: number) => {
     setSelectedIds((prev) => {
@@ -112,9 +137,12 @@ export const CustomersPage = () => {
   };
 
   return (
-    <div id="wrapper-customer-list" className="container-wrap container-table custom-grid-sidebar container-customer-list customer-list-dark">
+    <div
+      id="wrapper-customer-list"
+      className={`container-wrap container-table custom-grid-sidebar container-customer-list customer-list-dark${!internalSidebarOpen ? " customer-list-internal-sidebar-hidden" : ""}`}
+    >
       {/* Left sidebar - customer list filters */}
-      <div id="wrapper-side-menu-customer-list" className="sidebar-menu sidebar-left scrolls">
+      <div id="wrapper-side-menu-customer-list" className="sidebar-menu sidebar-left scrolls" aria-hidden={!internalSidebarOpen}>
         <ul className="sidebar-menu__nav flex-column">
           {SIDEBAR_ITEMS.map((item, index) => {
             const showDivider =
@@ -161,9 +189,15 @@ export const CustomersPage = () => {
           {/* Header: back, search, export, import, new customer */}
           <div className="header customer-list-header">
             <div className="header__left flex-1">
-              <Link to="/app" className="header-items v2-btn-default --icon-lg" aria-label="Back">
+              <button
+                type="button"
+                className="header-items v2-btn-default --icon-lg"
+                aria-label={internalSidebarOpen ? "Ocultar menú" : "Mostrar menú"}
+                onClick={() => setInternalSidebarOpen((prev) => !prev)}
+                title={internalSidebarOpen ? "Ocultar menú" : "Mostrar menú"}
+              >
                 <BackIcon />
-              </Link>
+              </button>
               <div className="search-form relative header-items">
                 <span className="svg-search-absolute">
                   <SearchIcon />
@@ -192,7 +226,7 @@ export const CustomersPage = () => {
               </div>
               <span className="is-divider mx-1" />
               <div className="header-items v2-btn-default has-icon btn-modal">
-                <ImportIcon />
+                <span className="material-symbols-outlined">publish</span>
                 Import
               </div>
               <div className="header-items v2-btn-main btn-modal --bg-green">New Customer</div>
@@ -225,7 +259,7 @@ export const CustomersPage = () => {
                         <span className="txt-ellipsis">Columns</span>
                         <span className="budget">4</span>
                       </div>
-                      <span className="arrow"><ArrowDownIcon /></span>
+                      <span className="arrow"><span className="material-symbols-outlined">keyboard_arrow_down</span></span>
                     </div>
                   </div>
                   <div className="header-items has-bg-blue v2-dropdown">
@@ -234,7 +268,7 @@ export const CustomersPage = () => {
                         <span className="txt-ellipsis">Status</span>
                         <span className="budget">2</span>
                       </div>
-                      <span className="arrow"><ArrowDownIcon /></span>
+                      <span className="arrow"><span className="material-symbols-outlined">keyboard_arrow_down</span></span>
                     </div>
                   </div>
                   <div className="header-items has-bg-blue v2-dropdown">
@@ -243,13 +277,15 @@ export const CustomersPage = () => {
                         <span className="txt-ellipsis">Tags</span>
                         <span className="budget --grey">All</span>
                       </div>
-                      <span className="arrow"><ArrowDownIcon /></span>
+                      <span className="arrow"><span className="material-symbols-outlined">keyboard_arrow_down</span></span>
                     </div>
                   </div>
-                  <div className="header-items v2-dropdown">
-                    <div tabIndex={0} className="dropbtn v2-btn-default">
-                      <span className="txt-ellipsis">First name</span>
-                      <span className="arrow"><ArrowDownIcon /></span>
+                  <div className="header-items has-bg-blue v2-dropdown">
+                    <div tabIndex={0} className="dropbtn v2-btn-default selection">
+                      <div className="dropbtn__label">
+                        <span className="txt-ellipsis">First name</span>
+                      </div>
+                      <span className="arrow"><span className="material-symbols-outlined">keyboard_arrow_down</span></span>
                     </div>
                   </div>
                   <div className="v2-btn-default btn-mapbox cursor">Sub Locations<span className="switch-icon ml-1"><span className="switch-icon__dots" /></span></div>
@@ -320,43 +356,111 @@ export const CustomersPage = () => {
                       </div>
                     </div>
                     <div className="col col-lg">
-                      <div className="has-orderby asc" title="Customer">
+                      <div className={`has-orderby ${sortColumn === "customer" ? sortDirection : ""}`} title="Customer">
                         <span className="orderby-txt">Customer</span>
-                        <span className="caret" />
-                        <div className="orderby-icons flex-column gap-3">
-                          <span className="icon --asc"><SortCaretIcon /></span>
-                          <span className="icon --desc"><SortCaretIcon /></span>
-                        </div>
+                        <span className="sort-arrows">
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            className={`icon sort-arrow sort-asc material-symbols-outlined ${sortColumn === "customer" && sortDirection === "asc" ? "is-active" : ""}`}
+                            onClick={() => handleSort("customer", "asc")}
+                            onKeyDown={(e) => e.key === "Enter" && handleSort("customer", "asc")}
+                            title="Ordenar ascendente"
+                          >
+                            expand_less
+                          </span>
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            className={`icon sort-arrow sort-desc material-symbols-outlined ${sortColumn === "customer" && sortDirection === "desc" ? "is-active" : ""}`}
+                            onClick={() => handleSort("customer", "desc")}
+                            onKeyDown={(e) => e.key === "Enter" && handleSort("customer", "desc")}
+                            title="Ordenar descendente"
+                          >
+                            expand_more
+                          </span>
+                        </span>
                       </div>
                     </div>
                     <div className="col col-lg">
-                      <div className="has-orderby" title="Email">
+                      <div className={`has-orderby ${sortColumn === "email" ? sortDirection : ""}`} title="Email">
                         <span className="orderby-txt">Email</span>
-                        <span className="caret" />
-                        <div className="orderby-icons flex-column gap-3">
-                          <span className="icon --asc"><SortCaretIcon /></span>
-                          <span className="icon --desc"><SortCaretIcon /></span>
-                        </div>
+                        <span className="sort-arrows">
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            className={`icon sort-arrow sort-asc material-symbols-outlined ${sortColumn === "email" && sortDirection === "asc" ? "is-active" : ""}`}
+                            onClick={() => handleSort("email", "asc")}
+                            onKeyDown={(e) => e.key === "Enter" && handleSort("email", "asc")}
+                            title="Ordenar ascendente"
+                          >
+                            expand_less
+                          </span>
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            className={`icon sort-arrow sort-desc material-symbols-outlined ${sortColumn === "email" && sortDirection === "desc" ? "is-active" : ""}`}
+                            onClick={() => handleSort("email", "desc")}
+                            onKeyDown={(e) => e.key === "Enter" && handleSort("email", "desc")}
+                            title="Ordenar descendente"
+                          >
+                            expand_more
+                          </span>
+                        </span>
                       </div>
                     </div>
                     <div className="col">
-                      <div className="has-orderby" title="Company">
+                      <div className={`has-orderby ${sortColumn === "company" ? sortDirection : ""}`} title="Company">
                         <span className="orderby-txt">Company</span>
-                        <span className="caret" />
-                        <div className="orderby-icons flex-column gap-3">
-                          <span className="icon --asc"><SortCaretIcon /></span>
-                          <span className="icon --desc"><SortCaretIcon /></span>
-                        </div>
+                        <span className="sort-arrows">
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            className={`icon sort-arrow sort-asc material-symbols-outlined ${sortColumn === "company" && sortDirection === "asc" ? "is-active" : ""}`}
+                            onClick={() => handleSort("company", "asc")}
+                            onKeyDown={(e) => e.key === "Enter" && handleSort("company", "asc")}
+                            title="Ordenar ascendente"
+                          >
+                            expand_less
+                          </span>
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            className={`icon sort-arrow sort-desc material-symbols-outlined ${sortColumn === "company" && sortDirection === "desc" ? "is-active" : ""}`}
+                            onClick={() => handleSort("company", "desc")}
+                            onKeyDown={(e) => e.key === "Enter" && handleSort("company", "desc")}
+                            title="Ordenar descendente"
+                          >
+                            expand_more
+                          </span>
+                        </span>
                       </div>
                     </div>
                     <div className="col">
-                      <div className="has-orderby" title="Balance">
+                      <div className={`has-orderby ${sortColumn === "balance" ? sortDirection : ""}`} title="Balance">
                         <span className="orderby-txt">Balance</span>
-                        <span className="caret" />
-                        <div className="orderby-icons flex-column gap-3">
-                          <span className="icon --asc"><SortCaretIcon /></span>
-                          <span className="icon --desc"><SortCaretIcon /></span>
-                        </div>
+                        <span className="sort-arrows">
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            className={`icon sort-arrow sort-asc material-symbols-outlined ${sortColumn === "balance" && sortDirection === "asc" ? "is-active" : ""}`}
+                            onClick={() => handleSort("balance", "asc")}
+                            onKeyDown={(e) => e.key === "Enter" && handleSort("balance", "asc")}
+                            title="Ordenar ascendente"
+                          >
+                            expand_less
+                          </span>
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            className={`icon sort-arrow sort-desc material-symbols-outlined ${sortColumn === "balance" && sortDirection === "desc" ? "is-active" : ""}`}
+                            onClick={() => handleSort("balance", "desc")}
+                            onKeyDown={(e) => e.key === "Enter" && handleSort("balance", "desc")}
+                            title="Ordenar descendente"
+                          >
+                            expand_more
+                          </span>
+                        </span>
                       </div>
                     </div>
                     <div className="col col-xs flex-none">
@@ -366,7 +470,7 @@ export const CustomersPage = () => {
 
                   {/* Table body */}
                   <div className="tables-list">
-                    {MOCK_CUSTOMERS.map((customer) => (
+                    {sortedCustomers.map((customer) => (
                       <div id={String(customer.id)} key={customer.id} className="rows">
                         <div className="col --checkbox">
                           <div className="check-items">

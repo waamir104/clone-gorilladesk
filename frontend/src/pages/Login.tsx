@@ -13,7 +13,7 @@ export const Login = () => {
       <div className="login-card">
         <img
           src="/login/logo.png"
-          alt="GorillaDesk"
+          alt="Ivy Green Desk"
           className="login-logo-img"
         />
 

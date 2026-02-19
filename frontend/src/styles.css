@@ -135,14 +135,15 @@ section p {
   line-height: 1.6;
 }
 
-/* Main app layout */
+/* Main app layout – Header y Sidebar estáticos; solo el contenido hace scroll */
 #main-page {
+  height: 100vh;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   min-width: 0;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .app-body {
@@ -150,7 +151,17 @@ section p {
   flex: 1;
   min-height: 0;
   min-width: 0;
-  overflow-x: hidden;
+  overflow: hidden;
+}
+
+/* Header fijo arriba */
+.header-v2 {
+  flex-shrink: 0;
+}
+
+/* Sidebar fijo a la izquierda */
+#sidebar.sidebar-container {
+  flex-shrink: 0;
 }
 
 .app-body.sidebar-hidden .sidebar-container {
@@ -161,18 +172,26 @@ section p {
   border-right-width: 0;
 }
 
+/* Main estático: el scroll ocurre solo en el contenido interno */
 .app-main-content {
   position: relative;
   z-index: 1;
   flex: 1;
   min-width: 0;
   min-height: 0;
-  overflow: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   padding: 1.5rem 2rem;
   background: #f4f5fb;
   display: flex;
   flex-direction: column;
+}
+
+.app-main-content__inner {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 /* Sidebar */
@@ -503,7 +522,7 @@ section p {
   padding: 0.5rem 0.75rem 0.5rem 2.5rem;
   font-size: 0.875rem;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: 4px;
   outline: none;
   background: #f9fafb;
 }
@@ -588,7 +607,7 @@ section p {
   padding: 0.35rem 0.6rem;
   font-size: 0.8125rem;
   border: 1px solid #e5e7eb;
-  border-radius: 6px;
+  border-radius: 4px;
   background: #fff;
   cursor: pointer;
   color: #374151;
@@ -692,7 +711,7 @@ section p {
   gap: 0.5rem;
   padding: 0.25rem 0.5rem 0.25rem 0.25rem;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: 4px;
   background: #fff;
   cursor: pointer;
 }
@@ -847,7 +866,7 @@ section p {
 
 .header-v2 .fs-13 { font-size: 0.8125rem; }
 
-/* Login page (GorillaDesk clone) */
+/* Login page (Ivy Green Desk) */
 .login-page {
   min-height: 100vh;
   display: flex;
@@ -1110,7 +1129,7 @@ section p {
 }
 
 .theme-dark .header-v2 .search-form .key.absolute {
-  color: var(--text-color);
+  color: rgb(176, 168, 181);
 }
 
 .theme-dark .header-v2 .search-ip:focus {
@@ -1125,7 +1144,7 @@ section p {
 .theme-dark .header-v2 .v2-dropdown__menu,
 .theme-dark .header-v2 .v2-dropdown__menu .nav-dropdown-link,
 .theme-dark .header-v2 .v2-dropdown__menu .items {
-  color: var(--text-color);
+  color: rgb(176, 168, 181);
 }
 
 .theme-dark .header-v2 .v2-dropdown__menu .items:hover {
@@ -1175,9 +1194,10 @@ section p {
   stroke: rgb(10, 12, 13);
 }
 
-.theme-dark .header-v2 .boxs-notification .notify-btn {
+.theme-dark .header-v2 .boxs-notification .notify-btn,
+.theme-dark .header-v2 .boxs-notification .notify-btn .material-symbols-outlined {
   background: rgb(10, 12, 13);
-  color: var(--text-color);
+  color: rgb(176, 168, 181);
 }
 
 .theme-dark .header-v2 .is-divider {
@@ -1187,22 +1207,34 @@ section p {
 .theme-dark .sidebar-container {
   background: rgb(19, 22, 23);
   border-right-color: rgba(255, 255, 255, 0.08);
-  color: var(--text-color);
+  color: rgb(176, 168, 181);
 }
 
 .theme-dark .sidebar-container .menu-item {
-  color: var(--text-color);
+  color: rgb(176, 168, 181);
 }
 
 .theme-dark .app-main-content {
   background: rgb(19, 22, 23);
-  color: var(--text-color);
+  color: rgb(176, 168, 181);
 }
 
 /* ========== Customer List Page ========== */
 .app-main-content:has(.container-customer-list) {
   padding: 0;
   background: transparent;
+}
+
+/* En Customers: scroll solo en la columna derecha; menú lateral estático */
+.app-main-content__inner:has(.container-customer-list) {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main-content__inner:has(.container-customer-list) .container-customer-list {
+  flex: 1;
+  min-height: 0;
 }
 
 .container-customer-list {
@@ -1213,6 +1245,25 @@ section p {
   overflow: hidden;
 }
 
+/* Menú interno oculto (toggle desde el botón Back) */
+.container-customer-list.customer-list-internal-sidebar-hidden {
+  grid-template-columns: 0 1fr;
+}
+
+.container-customer-list.customer-list-internal-sidebar-hidden #wrapper-side-menu-customer-list {
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  border-right-width: 0;
+  visibility: hidden;
+}
+
+/* Columna derecha hace scroll; sidebar izquierdo queda estático */
+.app-main-content__inner:has(.container-customer-list) .customer-list-main {
+  min-height: 0;
+}
+
 .custom-grid-sidebar {
   display: grid;
   grid-template-columns: 220px 1fr;
@@ -1220,12 +1271,18 @@ section p {
   flex: 1;
 }
 
-/* Menú interno (sidebar izquierdo) */
+/* Menú interno (sidebar izquierdo) – estático, sin scroll */
 .container-customer-list .sidebar-menu.sidebar-left {
   background: #fff;
   border-right: 1px solid #e5e7eb;
   overflow-y: auto;
   min-width: 0;
+}
+
+.app-main-content__inner:has(.container-customer-list) .container-customer-list .sidebar-menu.sidebar-left {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .container-customer-list .sidebar-menu__nav {
@@ -1255,7 +1312,7 @@ section p {
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.875rem;
-  color: #1f2933;
+  color: var(--color-icon);
 }
 
 .container-customer-list .sidebar-items:hover:not(.is-disable) {
@@ -1372,7 +1429,7 @@ section p {
   padding: 0.5rem 0.75rem 0.5rem 2.5rem;
   font-size: 0.875rem;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: 4px;
   outline: none;
   background: #fff;
 }
@@ -1390,16 +1447,50 @@ section p {
 .customer-list-header .v2-btn-main {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.35rem;
-  padding: 0.5rem 0.75rem;
+  height: 32px;
+  padding: 0 0.75rem;
   font-size: 0.875rem;
   font-weight: 500;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: 4px;
   background: #fff;
   color: #374151;
   cursor: pointer;
   text-decoration: none;
+}
+
+.customer-list-header .v2-btn-default.--icon-lg {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.customer-list-header .v2-btn-default.--icon-lg svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.customer-list-header .v2-btn-default .material-symbols-outlined {
+  color: var(--color-icon);
+}
+
+.customer-list-header .v2-btn-default.has-icon .material-symbols-outlined {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.customer-list-header .v2-btn-default.--icon-lg svg path {
+  fill: var(--color-icon);
+}
+
+.customer-list-header .export p {
+  color: var(--color-icon);
 }
 
 .customer-list-header .v2-btn-default:hover,
@@ -1411,13 +1502,13 @@ section p {
 .customer-list-header .v2-btn-main.--bg-green {
   background: var(--primary-btn-bg);
   border-color: var(--primary-btn-bg);
-  color: var(--primary-btn-color);
+  color: rgb(10, 12, 13);
 }
 
 .customer-list-header .v2-btn-main.--bg-green:hover {
   background: var(--primary-btn-hover-bg);
   border-color: var(--primary-btn-hover-bg);
-  color: var(--primary-btn-color);
+  color: rgb(10, 12, 13);
 }
 
 .customer-list-header .export {
@@ -1482,6 +1573,33 @@ section p {
   color: var(--selected-color);
 }
 
+/* Customer list: alfabeto como links (sin borde ni bg, azul) */
+.container-customer-list .filter-alphabet .alphabet-item {
+  font-size: 14px;
+  min-width: auto;
+  height: auto;
+  padding: 0 0.25rem;
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.container-customer-list .filter-alphabet .alphabet-item:hover {
+  background: transparent;
+  text-decoration: underline;
+  color: #1d4ed8;
+}
+
+.container-customer-list .filter-alphabet .alphabet-item.is-active {
+  background: #eff6ff;
+  border: 1px solid #2563eb;
+  border-radius: 4px;
+  color: #1d4ed8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
 .container-customer-list .wrap-tables {
   display: flex;
   flex-direction: column;
@@ -1502,6 +1620,65 @@ section p {
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+
+.container-customer-list .header.--filter .v2-btn-default,
+.container-customer-list .header.--filter .txt-ellipsis,
+.container-customer-list .header.--filter .material-symbols-outlined {
+  color: var(--color-icon);
+}
+
+.container-customer-list .header.--filter .v2-btn-default svg path {
+  fill: var(--color-icon);
+  stroke: var(--color-icon);
+}
+
+/* Active status dropdown – dark pill style */
+.container-customer-list .header.--filter .switch-action .dropbtn {
+  background: #1c1c1c;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 0.35rem 0.6rem;
+  color: #cccccc;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.container-customer-list .header.--filter .switch-action .dropbtn .txt-ellipsis {
+  color: #cccccc;
+}
+
+.container-customer-list .header.--filter .switch-action .dropbtn .arrow svg path {
+  stroke: #cccccc;
+  fill: none;
+}
+
+.container-customer-list .header.--filter .switch-action .dropbtn:hover {
+  background: #252525;
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #e5e5e5;
+}
+
+.container-customer-list .header.--filter .switch-action .dropbtn:hover .txt-ellipsis,
+.container-customer-list .header.--filter .switch-action .dropbtn:hover .arrow svg path {
+  color: #e5e5e5;
+  stroke: #e5e5e5;
+}
+
+/* Columns, Status, Tags, First name – same blue as export CSV/Excel */
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn,
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .txt-ellipsis,
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .dropbtn__label {
+  color: #2563eb;
+}
+
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .arrow .material-symbols-outlined,
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .arrow svg path {
+  color: #2563eb;
+  stroke: #2563eb;
 }
 
 .container-customer-list .v2-btn-default.selection .dropbtn__label {
@@ -1542,12 +1719,15 @@ section p {
   grid-template-columns: 40px 1fr 1fr 120px 100px 80px;
   gap: 0.5rem 1rem;
   align-items: center;
-  padding: 0.5rem 1rem;
+  height: 36px;
+  padding: 0 1rem;
   min-width: 700px;
   font-size: 0.875rem;
 }
 
-.container-customer-list .rows.--header {
+.container-customer-list .rows.--header,
+.container-customer-list .rows.--fixed.--header {
+  height: 36px;
   background: #f9fafb;
   border-bottom: 1px solid #e5e7eb;
   font-weight: 600;
@@ -1644,14 +1824,36 @@ section p {
 .container-customer-list .has-orderby {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.35rem;
   cursor: pointer;
   user-select: none;
 }
 
-.container-customer-list .has-orderby.asc .icon.--desc,
-.container-customer-list .has-orderby:not(.asc) .icon.--asc {
-  opacity: 0.3;
+.container-customer-list .has-orderby .icon.sort-indicator.material-symbols-outlined {
+  font-size: 18px;
+  color: inherit;
+}
+
+.container-customer-list .has-orderby .sort-arrows {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  line-height: 0.6;
+}
+
+.container-customer-list .has-orderby .sort-arrow.material-symbols-outlined {
+  font-size: 16px;
+  color: inherit;
+  opacity: 0.5;
+  cursor: pointer;
+  padding: 0;
+  user-select: none;
+}
+
+.container-customer-list .has-orderby .sort-arrow.material-symbols-outlined:hover,
+.container-customer-list .has-orderby .sort-arrow.material-symbols-outlined.is-active {
+  opacity: 1;
 }
 
 .container-customer-list .v2-btn-default.--purple {
@@ -1709,7 +1911,7 @@ section p {
 }
 
 .theme-dark .container-customer-list .sidebar-menu.sidebar-left .sidebar-items {
-  color: var(--text-color);
+  color: rgb(176, 168, 181);
 }
 
 .theme-dark .container-customer-list .sidebar-menu.sidebar-left .sidebar-items:hover:not(.is-disable) {
@@ -1730,15 +1932,16 @@ section p {
   border-color: rgba(255, 255, 255, 0.08);
 }
 
-.theme-dark .container-customer-list .rows.--header {
-  background: rgba(255, 255, 255, 0.04);
+.theme-dark .container-customer-list .rows.--header,
+.theme-dark .container-customer-list .rows.--fixed.--header {
+  background: rgb(10, 12, 13);
   border-bottom-color: rgba(255, 255, 255, 0.08);
-  color: var(--text-color);
+  color: rgb(176, 168, 181);
 }
 
 .theme-dark .container-customer-list .tables-list .rows {
   border-bottom-color: rgba(255, 255, 255, 0.06);
-  color: var(--text-color);
+  color: rgb(176, 168, 181);
 }
 
 .theme-dark .container-customer-list .tables-list .rows:hover {
@@ -1746,15 +1949,24 @@ section p {
 }
 
 .theme-dark .container-customer-list .filter-alphabet .alphabet-item {
-  background: rgb(30, 33, 35);
-  border-color: rgba(255, 255, 255, 0.12);
-  color: var(--text-color);
+  background: transparent;
+  border: none;
+  color: #60a5fa;
+}
+
+.theme-dark .container-customer-list .filter-alphabet .alphabet-item:hover {
+  background: transparent;
+  text-decoration: underline;
+  color: #93c5fd;
 }
 
 .theme-dark .container-customer-list .filter-alphabet .alphabet-item.is-active {
-  background: rgb(176, 168, 181);
-  border-color: rgb(176, 168, 181);
-  color: rgb(10, 12, 13);
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(147, 197, 253, 0.5);
+  border-radius: 6px;
+  color: #93c5fd;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 /* ========== Customer list – Dark theme (always, like reference) ========== */
@@ -1823,7 +2035,7 @@ section p {
 
 /* Header */
 .container-customer-list.customer-list-dark .customer-list-header .search-form .search-ip {
-  background: var(--cl-dark-panel);
+  background: rgb(10, 12, 13);
   border-color: var(--cl-dark-border);
   color: var(--cl-text);
 }
@@ -1838,7 +2050,7 @@ section p {
 }
 
 .container-customer-list.customer-list-dark .customer-list-header .v2-btn-default {
-  background: var(--cl-dark-panel);
+  background: rgb(10, 12, 13);
   border-color: var(--cl-dark-border);
   color: var(--cl-text);
 }
@@ -1856,16 +2068,27 @@ section p {
   color: var(--cl-text-muted);
 }
 
+/* Export (CSV, Excel) – mismo estilo que filtros Columns/Status/Tags */
 .container-customer-list.customer-list-dark .customer-list-header .export__option.--left,
 .container-customer-list.customer-list-dark .customer-list-header .export__option.--right {
-  background: var(--cl-blue);
-  border-color: var(--cl-blue);
-  color: #fff;
+  background: #131926;
+  border: 1px solid rgba(70, 110, 150, 0.35);
+  color: #2a84ff;
+}
+
+.container-customer-list.customer-list-dark .customer-list-header .export__option.--left {
+  border-radius: 4px 0 0 4px;
+}
+
+.container-customer-list.customer-list-dark .customer-list-header .export__option.--right {
+  border-radius: 0 4px 4px 0;
+  border-left: none;
 }
 
 .container-customer-list.customer-list-dark .customer-list-header .export__option:hover {
-  background: #1d4ed8;
-  border-color: #1d4ed8;
+  background: rgba(42, 132, 255, 0.12);
+  border-color: rgba(70, 110, 150, 0.5);
+  color: #2a84ff;
 }
 
 .container-customer-list.customer-list-dark .customer-list-header .is-divider {
@@ -1875,64 +2098,120 @@ section p {
 .container-customer-list.customer-list-dark .customer-list-header .v2-btn-main.--bg-green {
   background: var(--cl-green);
   border-color: var(--cl-green);
-  color: #fff;
+  color: rgb(10, 12, 13);
 }
 
 .container-customer-list.customer-list-dark .customer-list-header .v2-btn-main.--bg-green:hover {
   background: #16a34a;
   border-color: #16a34a;
-  color: #fff;
+  color: rgb(10, 12, 13);
 }
 
-/* Alphabet */
+/* Alphabet – como links (sin borde ni bg, azul) */
 .container-customer-list.customer-list-dark .filter-alphabet .alphabet-item {
-  background: var(--cl-dark-panel);
-  border-color: var(--cl-dark-border);
-  color: var(--cl-text);
+  background: transparent;
+  border: none;
+  color: var(--cl-blue);
 }
 
 .container-customer-list.customer-list-dark .filter-alphabet .alphabet-item:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: transparent;
+  text-decoration: underline;
+  color: #93c5fd;
 }
 
 .container-customer-list.customer-list-dark .filter-alphabet .alphabet-item.is-active {
-  background: var(--cl-blue);
-  border-color: var(--cl-blue);
-  color: #fff;
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid var(--cl-blue);
+  border-radius: 4px;
+  color: #93c5fd;
+  font-weight: 600;
+  text-decoration: none;
 }
 
-/* Filter bar: blue dropdowns (Columns, Status, Tags) */
+/* Filter bar: Columns, Status, Tags – estilo imagen (fondo oscuro, texto/badge azul, 32px height, 14px font) */
 .container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn {
-  background: var(--cl-blue);
-  border-color: var(--cl-blue);
-  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  height: 32px;
+  padding: 0 0.75rem;
+  font-size: 14px;
+  background: #131926;
+  border: 1px solid rgba(70, 110, 150, 0.35);
+  border-radius: 4px;
+  color: #2a84ff;
+}
+
+.container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn .dropbtn__label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn .budget {
-  background: rgba(255, 255, 255, 0.25);
+  background: #2a84ff;
   color: #fff;
+  font-size: 11px;
+  padding: 0 0.35rem;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn .budget.--grey {
-  background: rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.9);
+  background: #2a84ff;
+  color: #fff;
+  font-size: 11px;
+  height: 16px;
+  padding: 0 0.35rem;
+  border-radius: 8px;
+  min-width: auto;
+  width: auto;
+}
+
+.container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn .arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn .arrow .material-symbols-outlined {
+  font-size: 20px;
+  color: #2a84ff;
 }
 
 .container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn .arrow svg {
-  stroke: #fff;
+  stroke: #2a84ff;
 }
 
 .container-customer-list.customer-list-dark .header.--filter .v2-btn-default:not(.selection) .dropbtn,
 .container-customer-list.customer-list-dark .header.--filter .v2-btn-default.btn-mapbox {
-  background: var(--cl-dark-panel);
+  background: rgb(10, 12, 13);
   border-color: var(--cl-dark-border);
   color: var(--cl-text);
+  border-radius: 4px;
+}
+
+.container-customer-list.customer-list-dark .header.--filter .v2-btn-default.btn-mapbox {
+  height: 32px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  padding-left: 12px;
+  padding-right: 12px;
+  box-sizing: border-box;
 }
 
 .container-customer-list.customer-list-dark .header.--filter .switch-action .dropbtn {
-  background: var(--cl-dark-panel);
+  background: rgb(10, 12, 13);
   border-color: var(--cl-dark-border);
   color: var(--cl-text);
+  border-radius: 4px;
 }
 
 .container-customer-list.customer-list-dark .header.--filter .v2-btn-default .arrow svg {
@@ -1990,13 +2269,21 @@ section p {
   border-color: var(--cl-dark-border);
 }
 
-.container-customer-list.customer-list-dark .rows.--header {
-  background: rgba(255, 255, 255, 0.04);
+/* Mismo bg que el header de la app en dark theme */
+.container-customer-list.customer-list-dark .rows.--header,
+.container-customer-list.customer-list-dark .rows.--fixed.--header {
+  background: rgb(10, 12, 13);
   border-bottom-color: var(--cl-dark-border);
   color: var(--cl-text);
+  font-weight: 600;
 }
 
-.container-customer-list.customer-list-dark .rows.--header .has-orderby {
+.container-customer-list.customer-list-dark .rows.--header .has-orderby,
+.container-customer-list.customer-list-dark .rows.--header .has-orderby .orderby-txt,
+.container-customer-list.customer-list-dark .rows.--header .has-orderby .icon.sort-indicator.material-symbols-outlined,
+.container-customer-list.customer-list-dark .rows.--fixed.--header .has-orderby,
+.container-customer-list.customer-list-dark .rows.--fixed.--header .has-orderby .orderby-txt,
+.container-customer-list.customer-list-dark .rows.--fixed.--header .has-orderby .icon.sort-indicator.material-symbols-outlined {
   color: var(--cl-text);
 }
 

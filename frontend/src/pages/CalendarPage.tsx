@@ -213,7 +213,7 @@ export const CalendarPage = () => {
                   <div id="map-header" className="map-header">
                     <div className="search relative flexcenter">
                       <span className="svg-search-absolute"><IconSearch /></span>
-                      <input id="gd-search-map" className="field-search no-effect" type="text" placeholder="Search GorillaDesk" autoComplete="off" />
+                      <input id="gd-search-map" className="field-search no-effect" type="text" placeholder="Search Ivy Green Desk" autoComplete="off" />
                     </div>
                     <div className="wrap-filter list-job-status v2-dropdown">
                       <button type="button" className="dropbtn v2-btn-default --transparent" tabIndex={0}>

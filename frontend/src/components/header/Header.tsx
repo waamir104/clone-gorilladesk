@@ -102,7 +102,7 @@ export const Header = ({ isSidebarOpen = true, onToggleSidebar }: HeaderProps) =
             </button>
           </div>
           <Link className="logo" to="/app">
-            <img src="/login/logo icon.png" alt="GorillaDesk" width={32} height={32} />
+            <img src="/login/logo icon.png" alt="Ivy Green Desk" width={32} height={32} />
           </Link>
           <div
             ref={calendarDropdownRef}

@@ -15,7 +15,9 @@ export const AppPage = () => {
       <div className={`app-body${sidebarOpen ? "" : " sidebar-hidden"}`}>
         <Sidebar />
         <main className="app-main-content">
-          <Outlet />
+          <div className="app-main-content__inner">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>
