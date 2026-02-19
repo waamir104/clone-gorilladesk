@@ -86,6 +86,7 @@ export const CustomersPage = () => {
   const [selectedCount, setSelectedCount] = useState(0);
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [selectAll, setSelectAll] = useState(false);
+  const [activeSidebarId, setActiveSidebarId] = useState<string>("total");
 
   const toggleRow = (id: number) => {
     setSelectedIds((prev) => {
@@ -113,7 +114,7 @@ export const CustomersPage = () => {
   return (
     <div id="wrapper-customer-list" className="container-wrap container-table custom-grid-sidebar container-customer-list customer-list-dark">
       {/* Left sidebar - customer list filters */}
-      <div id="wrapper-side-menu-customer-list" className="sidebar-menu sidebar-left scrolls customer-list-sidebar">
+      <div id="wrapper-side-menu-customer-list" className="sidebar-menu sidebar-left scrolls">
         <ul className="sidebar-menu__nav flex-column">
           {SIDEBAR_ITEMS.map((item, index) => {
             const showDivider =
@@ -125,7 +126,11 @@ export const CustomersPage = () => {
                 )}
                 <li>
                   <div
-                    className={`sidebar-items flex-betweenitems ${item.active ? "active" : ""} ${item.lead ? "--lead" : ""} ${item.red ? "--red" : ""} ${item.disabled ? "is-disable" : ""}`}
+                    role="button"
+                    tabIndex={0}
+                    className={`sidebar-items flex-betweenitems ${activeSidebarId === item.id ? "active" : ""} ${item.lead ? "--lead" : ""} ${item.red ? "--red" : ""} ${item.disabled ? "is-disable" : ""}`}
+                    onClick={() => !item.disabled && setActiveSidebarId(item.id)}
+                    onKeyDown={(e) => !item.disabled && (e.key === "Enter" || e.key === " ") && setActiveSidebarId(item.id)}
                   >
                     <div className="title flex-1">
                       <p className="txt-ellipsis" title={item.label}>
