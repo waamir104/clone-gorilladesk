@@ -55,24 +55,30 @@ const SIDEBAR_ITEMS = [
 const MOCK_CUSTOMERS = [
   { id: 2938, name: "Aaron Rathburn", email: "vwabr337@yahoo.com", company: "", balance: "$0.00" },
   { id: 596, name: "ABDUL AHMED", email: "ahmed0369@gmail.com", company: "", balance: "$0.00" },
-  { id: 597, name: "ABDULLA AMYN", email: "", company: "", balance: "$0.00" },
-  { id: 598, name: "ABERDEEN SUITES LLC.", email: "tiffany@aberdeensuitesllc.com", company: "", balance: "$0.00" },
-  { id: 599, name: "ABI-NAJM CHRIS", email: "chris.abinajm@gmail.com", company: "", balance: "$0.00" },
-  { id: 600, name: "ABRON JAMES & KAREN (1X)", email: "jabron@icloud.com", company: "", balance: "$0.00" },
-  { id: 601, name: "ACALIN NADA & STEVE", email: "sacalin@aol.com", company: "", balance: "$0.00" },
-  { id: 603, name: "ACOSTA JORGE", email: "jiaglobal@bellsouth.net", company: "", balance: "$0.00" },
-  { id: 602, name: "ACOSTA MIKE", email: "lauraacosta02@gmail.com", company: "", balance: "$0.00" },
-  { id: 604, name: "ADDISON BOBBY (1X)", email: "baddison@bop.gov", company: "", balance: "$0.00" },
-  { id: 605, name: "ADKINS LINDSAY (1X)", email: "", company: "", balance: "$0.00" },
-  { id: 606, name: "AGUAYO PHILLIS (1X)", email: "", company: "", balance: "$0.00" },
-  { id: 607, name: "AHJUDER SONNY (1X)", email: "sonnyahjuder@att.net", company: "", balance: "$0.00" },
-  { id: 608, name: "ALBA HORACIO", email: "horalbas@aol.com", company: "", balance: "$0.00" },
-  { id: 609, name: "ALDRED BARBARA (1X)", email: "aldred.mail6@gmail.com", company: "", balance: "$0.00" },
-  { id: 610, name: "ALEXANDRA VALERIE", email: "", company: "", balance: "$0.00" },
+  { id: 597, name: "Brian Miller", email: "brian.m@mail.com", company: "Tech Co", balance: "$120.50" },
+  { id: 598, name: "Carlos García", email: "carlos.g@mail.com", company: "", balance: "$0.00" },
+  { id: 599, name: "Diana Ross", email: "diana.ross@mail.com", company: "Design Studio", balance: "$450.00" },
+  { id: 600, name: "Edward Chen", email: "e.chen@mail.com", company: "", balance: "$0.00" },
+  { id: 601, name: "Fiona Walsh", email: "fiona.w@mail.com", company: "Walsh & Co", balance: "$89.00" },
+  { id: 603, name: "George Thompson", email: "g.thompson@mail.com", company: "", balance: "$0.00" },
+  { id: 602, name: "Helen Park", email: "helen.park@mail.com", company: "Park Consulting", balance: "$1,234.00" },
+  { id: 604, name: "Ivan Kozlov", email: "ivan.k@mail.com", company: "", balance: "$0.00" },
+  { id: 605, name: "Julia Martinez", email: "julia.m@mail.com", company: "Martinez LLC", balance: "$56.75" },
+  { id: 606, name: "Kevin O'Brien", email: "kevin.ob@mail.com", company: "", balance: "$0.00" },
+  { id: 607, name: "Laura Simmons", email: "laura.s@mail.com", company: "Simmons Inc", balance: "$320.00" },
+  { id: 608, name: "Michael Brown", email: "m.brown@mail.com", company: "", balance: "$0.00" },
+  { id: 609, name: "Nancy Wilson", email: "nancy.w@mail.com", company: "Wilson Group", balance: "$780.50" },
+  { id: 610, name: "Oliver Davis", email: "oliver.d@mail.com", company: "", balance: "$0.00" },
   { id: 3763, name: "Alexis Brown", email: "aw011709@yahoo.com", company: "", balance: "$0.00" },
-  { id: 611, name: "ALIM MOHAMMAD", email: "mohammadalim1973@gmail.com", company: "", balance: "$0.00" },
-  { id: 612, name: "ALIM MOHAMMAD (2)", email: "mohammadahalim@gmail.com", company: "", balance: "$0.00" },
-  { id: 613, name: "ALLEN CINDY", email: "cinallen@gmail.com", company: "", balance: "$0.00" },
+  { id: 611, name: "Peter Johnson", email: "peter.j@mail.com", company: "Johnson & Sons", balance: "$95.00" },
+  { id: 612, name: "Rachel Green", email: "rachel.g@mail.com", company: "", balance: "$0.00" },
+  { id: 613, name: "Samuel Lee", email: "samuel.lee@mail.com", company: "Lee Associates", balance: "$2,100.00" },
+  { id: 614, name: "Teresa Ruiz", email: "teresa.r@mail.com", company: "", balance: "$0.00" },
+  { id: 615, name: "Uma Patel", email: "uma.p@mail.com", company: "Patel Services", balance: "$445.00" },
+  { id: 616, name: "Victor Torres", email: "victor.t@mail.com", company: "", balance: "$0.00" },
+  { id: 617, name: "William Peña", email: "william.p@mail.com", company: "Peña Dev", balance: "$0.00" },
+  { id: 618, name: "Yuki Tanaka", email: "yuki.t@mail.com", company: "Tanaka Corp", balance: "$156.00" },
+  { id: 619, name: "Zoe Anderson", email: "zoe.a@mail.com", company: "", balance: "$0.00" },
 ];
 
 export const CustomersPage = () => {
@@ -113,6 +119,15 @@ export const CustomersPage = () => {
     setSortDirection(direction);
   };
 
+  const filteredCustomers = useMemo(() => {
+    if (alphabetFilter === "A-Z") return sortedCustomers;
+    const letter = alphabetFilter.toUpperCase();
+    return sortedCustomers.filter((customer) => {
+      const firstChar = (customer.name || "").trim().toUpperCase().charAt(0);
+      return firstChar === letter;
+    });
+  }, [sortedCustomers, alphabetFilter]);
+
   const toggleRow = (id: number) => {
     setSelectedIds((prev) => {
       const next = new Set(prev);
@@ -124,15 +139,27 @@ export const CustomersPage = () => {
     });
   };
 
+  const selectAllVisible = filteredCustomers.length > 0 && filteredCustomers.every((c) => selectedIds.has(c.id));
+
   const toggleSelectAll = () => {
-    if (selectAll) {
-      setSelectedIds(new Set());
-      setSelectedCount(0);
+    if (selectAllVisible) {
+      const filteredIds = new Set(filteredCustomers.map((c) => c.id));
+      setSelectedIds((prev) => {
+        const next = new Set(prev);
+        filteredIds.forEach((id) => next.delete(id));
+        setSelectedCount(next.size);
+        return next;
+      });
       setSelectAll(false);
     } else {
-      setSelectedIds(new Set(MOCK_CUSTOMERS.map((c) => c.id)));
-      setSelectedCount(MOCK_CUSTOMERS.length);
-      setSelectAll(true);
+      const filteredIds = new Set(filteredCustomers.map((c) => c.id));
+      setSelectedIds((prev) => {
+        const next = new Set(prev);
+        filteredIds.forEach((id) => next.add(id));
+        setSelectedCount(next.size);
+        return next;
+      });
+      setSelectAll(filteredCustomers.length === MOCK_CUSTOMERS.length);
     }
   };
 
@@ -305,7 +332,7 @@ export const CustomersPage = () => {
                   <input
                     id="customer_list_cb"
                     type="checkbox"
-                    checked={selectAll}
+                    checked={selectAllVisible}
                     onChange={toggleSelectAll}
                     aria-label="Select all"
                   />
@@ -314,7 +341,7 @@ export const CustomersPage = () => {
                   </div>
                   <span className="flexcenter black fw-600">
                     <span className="black-darker2">{selectedCount}</span>
-                    <span>/{MOCK_CUSTOMERS.length.toLocaleString()}</span>
+                    <span>/{filteredCustomers.length.toLocaleString()}</span>
                   </span>
                 </div>
                 <div className="header-items v2-dropdown">
@@ -346,7 +373,7 @@ export const CustomersPage = () => {
                         <input
                           id="-checkbox-header0-check-box"
                           type="checkbox"
-                          checked={selectAll}
+                          checked={selectAllVisible}
                           onChange={toggleSelectAll}
                           aria-label="Select all rows"
                         />
@@ -470,7 +497,7 @@ export const CustomersPage = () => {
 
                   {/* Table body */}
                   <div className="tables-list">
-                    {sortedCustomers.map((customer) => (
+                    {filteredCustomers.map((customer) => (
                       <div id={String(customer.id)} key={customer.id} className="rows">
                         <div className="col --checkbox">
                           <div className="check-items">
