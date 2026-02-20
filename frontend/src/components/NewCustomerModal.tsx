@@ -3,6 +3,10 @@ import { createPortal } from "react-dom";
 
 const STATUS_OPTIONS = ["New Lead", "Active Customer", "Inactive Customer"] as const;
 
+const PHONE_TYPE_OPTIONS = ["Home", "Home Fax", "Main", "Mobile", "Work", "Work Fax"] as const;
+
+const SOURCE_OPTIONS = ["Angieslist", "Craigslist", "Facebook", "Google", "Referral", "Yelp"] as const;
+
 type NewCustomerModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -15,22 +19,40 @@ const CloseIcon = () => (
   </svg>
 );
 
-const ArrowDownIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4.5 7.5L8 11L11.5 7.5" stroke="var(--color-icon)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
 const PlusIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path fillRule="evenodd" clipRule="evenodd" d="M12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7C13 6.44772 12.5523 6 12 6Z" fill="var(--color-icon)" />
   </svg>
 );
 
+type DropdownKey = "status" | "mobile" | "source" | "tags" | "billingEmail" | "workOrderEmail" | "locationTags";
+
 export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onClose }) => {
   const [status, setStatus] = useState<string>("Active Customer");
-  const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
+  const [phoneType, setPhoneType] = useState<string>("Mobile");
+  const [source, setSource] = useState<string>("");
+  const [openDropdownKey, setOpenDropdownKey] = useState<DropdownKey | null>(null);
   const statusDropdownRef = useRef<HTMLDivElement>(null);
+  const mobileDropdownRef = useRef<HTMLDivElement>(null);
+  const sourceDropdownRef = useRef<HTMLDivElement>(null);
+  const tagsDropdownRef = useRef<HTMLDivElement>(null);
+  const billingEmailDropdownRef = useRef<HTMLDivElement>(null);
+  const workOrderEmailDropdownRef = useRef<HTMLDivElement>(null);
+  const locationTagsDropdownRef = useRef<HTMLDivElement>(null);
+
+  const dropdownRefs: Record<DropdownKey, React.RefObject<HTMLDivElement | null>> = {
+    status: statusDropdownRef,
+    mobile: mobileDropdownRef,
+    source: sourceDropdownRef,
+    tags: tagsDropdownRef,
+    billingEmail: billingEmailDropdownRef,
+    workOrderEmail: workOrderEmailDropdownRef,
+    locationTags: locationTagsDropdownRef,
+  };
+
+  const toggleDropdown = (key: DropdownKey) => {
+    setOpenDropdownKey((prev) => (prev === key ? null : key));
+  };
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -47,15 +69,17 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
   }, [isOpen, onClose]);
 
   useEffect(() => {
-    if (!statusDropdownOpen) return;
+    if (openDropdownKey === null) return;
     const handleClickOutside = (e: MouseEvent) => {
-      if (statusDropdownRef.current && !statusDropdownRef.current.contains(e.target as Node)) {
-        setStatusDropdownOpen(false);
+      const target = e.target as Node;
+      const ref = dropdownRefs[openDropdownKey];
+      if (ref?.current && !ref.current.contains(target)) {
+        setOpenDropdownKey(null);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [statusDropdownOpen]);
+  }, [openDropdownKey]);
 
   if (!isOpen) return null;
 
@@ -113,24 +137,24 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                     <div className="rows__field">
                       <div
                         ref={statusDropdownRef}
-                        className={`v2-dropdown${statusDropdownOpen ? " is-open" : ""}`}
+                        className={`v2-dropdown${openDropdownKey === "status" ? " is-open" : ""}`}
                       >
                         <div
                           className="dropbtn items"
                           tabIndex={0}
                           role="button"
-                          onClick={() => setStatusDropdownOpen((prev) => !prev)}
+                          onClick={() => toggleDropdown("status")}
                           onKeyDown={(e) => {
                             if (e.key === "Enter" || e.key === " ") {
                               e.preventDefault();
-                              setStatusDropdownOpen((prev) => !prev);
+                              toggleDropdown("status");
                             }
                           }}
                         >
                           <div className="txt-ellipsis">{status}</div>
                           <div className="arrow">
                             <span className="material-symbols-outlined">
-                              {statusDropdownOpen ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+                              {openDropdownKey === "status" ? "keyboard_arrow_up" : "keyboard_arrow_down"}
                             </span>
                           </div>
                         </div>
@@ -144,7 +168,7 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                                 aria-selected={status === option}
                                 onClick={() => {
                                   setStatus(option);
-                                  setStatusDropdownOpen(false);
+                                  setOpenDropdownKey(null);
                                 }}
                               >
                                 {option}
@@ -233,12 +257,39 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                     <div className="rows__field has-many-field has-new-field">
                       <div className="has-many-field__items phone-field">
                         <input name="phone" className="field-input" type="text" placeholder="000-000-0000" defaultValue="" />
-                        <div className="v2-dropdown">
-                          <div className="dropbtn items" tabIndex={0}>
-                            <span className="txt-ellipsis">Mobile</span>
-                            <span className="arrow"><ArrowDownIcon /></span>
+                        <div ref={mobileDropdownRef} className={`v2-dropdown${openDropdownKey === "mobile" ? " is-open" : ""}`}>
+                          <div
+                            className="dropbtn items"
+                            tabIndex={0}
+                            role="button"
+                            onClick={() => toggleDropdown("mobile")}
+                            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleDropdown("mobile"); } }}
+                          >
+                            <span className="txt-ellipsis">{phoneType}</span>
+                            <span className="arrow">
+                              <span className="material-symbols-outlined">
+                                {openDropdownKey === "mobile" ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+                              </span>
+                            </span>
                           </div>
-                          <div className="v2-dropdown__menu content-checked" />
+                          <div className="v2-dropdown__menu content-checked">
+                            <ul>
+                              {PHONE_TYPE_OPTIONS.map((option) => (
+                                <li
+                                  key={option}
+                                  className={`items${phoneType === option ? " is-selected" : ""}`}
+                                  role="option"
+                                  aria-selected={phoneType === option}
+                                  onClick={() => {
+                                    setPhoneType(option);
+                                    setOpenDropdownKey(null);
+                                  }}
+                                >
+                                  {option}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         </div>
                       </div>
                       <button type="button" className="v2-btn-main --bg-green has-icon svg-white" tabIndex={0}>
@@ -254,14 +305,41 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       <p className="txt-ellipsis txt-label" title="Source">Source</p>
                     </div>
                     <div className="rows__field">
-                      <div className="select-source v2-dropdown">
-                        <div className="dropbtn items" tabIndex={0}>
+                      <div ref={sourceDropdownRef} className={`select-source v2-dropdown${openDropdownKey === "source" ? " is-open" : ""}`}>
+                        <div
+                          className="dropbtn items"
+                          tabIndex={0}
+                          role="button"
+                          onClick={() => toggleDropdown("source")}
+                          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleDropdown("source"); } }}
+                        >
                           <div className="tag-label px-1 m-0">
-                            <span className="tag-label__ellipsis">How did you hear about us?</span>
+                            <span className="tag-label__ellipsis">{source || "How did you hear about us?"}</span>
                           </div>
-                          <span className="arrow"><ArrowDownIcon /></span>
+                          <span className="arrow">
+                            <span className="material-symbols-outlined">
+                              {openDropdownKey === "source" ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+                            </span>
+                          </span>
                         </div>
-                        <div className="v2-dropdown__menu scrolls" />
+                        <div className="v2-dropdown__menu scrolls">
+                          <ul>
+                            {SOURCE_OPTIONS.map((option) => (
+                              <li
+                                key={option}
+                                className={`items${source === option ? " is-selected" : ""}`}
+                                role="option"
+                                aria-selected={source === option}
+                                onClick={() => {
+                                  setSource(option);
+                                  setOpenDropdownKey(null);
+                                }}
+                              >
+                                {option}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -272,12 +350,22 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       <p className="txt-ellipsis txt-label" title="Tags">Tags</p>
                     </div>
                     <div className="rows__field --location-tag">
-                      <div className="list-add-tags v2-dropdown">
-                        <div tabIndex={0} className="dropbtn items group-tags has-search p-1">
-                          <div className="box-tags">
+                      <div ref={tagsDropdownRef} className={`list-add-tags v2-dropdown${openDropdownKey === "tags" ? " is-open" : ""}`}>
+                        <div
+                          tabIndex={0}
+                          role="button"
+                          className="dropbtn items group-tags has-search p-1"
+                          onClick={() => toggleDropdown("tags")}
+                          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleDropdown("tags"); } }}
+                        >
+                          <div className="box-tags" onClick={(e) => e.stopPropagation()}>
                             <input type="text" className="select-input-tag" placeholder="Tag" />
                           </div>
-                          <div className="arrow"><ArrowDownIcon /></div>
+                          <div className="arrow">
+                            <span className="material-symbols-outlined">
+                              {openDropdownKey === "tags" ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -343,10 +431,20 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                     </div>
                     <div className="rows__field has-many-field has-new-field">
                       <div className="has-many-field__items">
-                        <div className="v2-dropdown">
-                          <div className="dropbtn items" tabIndex={0}>
+                        <div ref={billingEmailDropdownRef} className={`v2-dropdown${openDropdownKey === "billingEmail" ? " is-open" : ""}`}>
+                          <div
+                            className="dropbtn items"
+                            tabIndex={0}
+                            role="button"
+                            onClick={() => toggleDropdown("billingEmail")}
+                            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleDropdown("billingEmail"); } }}
+                          >
                             <p className="txt-ellipsis">None</p>
-                            <span className="arrow"><ArrowDownIcon /></span>
+                            <span className="arrow">
+                              <span className="material-symbols-outlined">
+                                {openDropdownKey === "billingEmail" ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+                              </span>
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -364,10 +462,20 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                     </div>
                     <div className="rows__field has-many-field has-new-field">
                       <div className="has-many-field__items">
-                        <div className="v2-dropdown">
-                          <div className="dropbtn items" tabIndex={0}>
+                        <div ref={workOrderEmailDropdownRef} className={`v2-dropdown${openDropdownKey === "workOrderEmail" ? " is-open" : ""}`}>
+                          <div
+                            className="dropbtn items"
+                            tabIndex={0}
+                            role="button"
+                            onClick={() => toggleDropdown("workOrderEmail")}
+                            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleDropdown("workOrderEmail"); } }}
+                          >
                             <p className="txt-ellipsis">None</p>
-                            <span className="arrow"><ArrowDownIcon /></span>
+                            <span className="arrow">
+                              <span className="material-symbols-outlined">
+                                {openDropdownKey === "workOrderEmail" ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+                              </span>
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -408,12 +516,22 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       <p className="txt-ellipsis txt-label" title="Location Tags">Location Tags</p>
                     </div>
                     <div className="rows__field --location-tag">
-                      <div className="list-add-tags v2-dropdown">
-                        <div tabIndex={0} className="dropbtn items group-tags has-search p-1">
-                          <div className="box-tags">
+                      <div ref={locationTagsDropdownRef} className={`list-add-tags v2-dropdown${openDropdownKey === "locationTags" ? " is-open" : ""}`}>
+                        <div
+                          tabIndex={0}
+                          role="button"
+                          className="dropbtn items group-tags has-search p-1"
+                          onClick={() => toggleDropdown("locationTags")}
+                          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleDropdown("locationTags"); } }}
+                        >
+                          <div className="box-tags" onClick={(e) => e.stopPropagation()}>
                             <input type="text" className="select-input-tag" placeholder="Tag" />
                           </div>
-                          <div className="arrow"><ArrowDownIcon /></div>
+                          <div className="arrow">
+                            <span className="material-symbols-outlined">
+                              {openDropdownKey === "locationTags" ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>

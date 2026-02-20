@@ -4324,6 +4324,7 @@ section p {
 
 .modal-addcustomer .rows__field {
   min-width: 0;
+  max-width: 370px;
 }
 
 .modal-addcustomer .tooltip.d-flex {
@@ -4361,6 +4362,7 @@ section p {
 
 .modal-addcustomer .field-input {
   width: 100%;
+  max-width: 370px;
   height: 32px;
   padding: 0 0.75rem;
   font-size: 14px;
@@ -4404,13 +4406,43 @@ section p {
 
 .modal-addcustomer .rows__field.has-many-address {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+  grid-template-columns: 1fr 50px 80px;
+  gap: 0;
 }
 
-.modal-addcustomer .has-many-address .field-street.--first,
+.modal-addcustomer .has-many-address .field-input {
+  margin: 0;
+  border-radius: 0;
+}
+
+.modal-addcustomer .has-many-address .field-street.--first {
+  grid-column: 1 / -1;
+  border-radius: 6px 6px 0 0;
+}
+
 .modal-addcustomer .has-many-address .field-street.--second {
   grid-column: 1 / -1;
+  border-top: none;
+}
+
+.modal-addcustomer .has-many-address .field-city,
+.modal-addcustomer .has-many-address .field-state {
+  border-top: none;
+}
+
+.modal-addcustomer .has-many-address .field-city {
+  border-right: none;
+  border-radius: 0 0 0 6px;
+}
+
+.modal-addcustomer .has-many-address .field-state {
+  border-right: none;
+  border-radius: 0;
+}
+
+.modal-addcustomer .has-many-address .field-zip {
+  border-top: none;
+  border-radius: 0 0 6px 0;
 }
 
 /* Todos los selects del modal: Status, Mobile, Source, Tags, None, Location Tags */
@@ -4420,6 +4452,7 @@ section p {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  max-width: 370px;
   height: 32px;
   padding: 0 0.75rem;
   font-size: 14px;
@@ -4434,6 +4467,13 @@ section p {
 .modal-addcustomer .v2-dropdown .dropbtn .arrow {
   display: inline-flex;
   flex-shrink: 0;
+}
+
+.modal-addcustomer .v2-dropdown .dropbtn .arrow .material-symbols-outlined {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  margin: 0;
 }
 
 .modal-addcustomer .v2-dropdown {
@@ -4488,18 +4528,37 @@ section p {
 
 .modal-addcustomer .has-many-field__items.phone-field {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: stretch;
+  gap: 0;
   flex-wrap: wrap;
+  max-width: 370px;
 }
 
 .modal-addcustomer .has-many-field__items.phone-field .field-input {
   flex: 1;
-  min-width: 120px;
+  min-width: 0;
+  max-width: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
 }
 
 .modal-addcustomer .has-many-field__items.phone-field .v2-dropdown {
-  min-width: 100px;
+  width: 180px;
+  min-width: 180px;
+  flex-shrink: 0;
+}
+
+.modal-addcustomer .has-many-field__items.phone-field .v2-dropdown .dropbtn.items {
+  max-width: none;
+  width: 100%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 1px solid var(--border-color, #e5e7eb);
+}
+
+.modal-addcustomer .has-many-field__items:not(.phone-field) .v2-dropdown .dropbtn.items {
+  padding: 0 12px;
 }
 
 .modal-addcustomer .group-tags.has-search .box-tags,
@@ -4527,7 +4586,7 @@ section p {
   font-size: 14px;
   border: 1px solid var(--border-color, #e5e7eb);
   border-radius: 6px;
-  padding: 0 0.5rem;
+  padding: 0 12px;
   box-sizing: border-box;
 }
 
@@ -4704,6 +4763,24 @@ section p {
 
 .modal-addcustomer .v2-btn-main.has-icon svg {
   flex-shrink: 0;
+}
+
+.modal-addcustomer .body-modal .v2-btn-main svg,
+.modal-addcustomer .body-modal .v2-btn-main .material-symbols-outlined,
+.modal-addcustomer .body-modal .btn-modal.v2-btn-main svg,
+.modal-addcustomer .body-modal .btn-modal.v2-btn-main .material-symbols-outlined {
+  width: 24px;
+  height: 24px;
+  margin: 0 4px 0 0;
+  flex-shrink: 0;
+}
+
+.modal-addcustomer .body-modal .v2-btn-main .material-symbols-outlined,
+.modal-addcustomer .body-modal .btn-modal.v2-btn-main .material-symbols-outlined {
+  font-size: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-addcustomer .svg-white svg path,

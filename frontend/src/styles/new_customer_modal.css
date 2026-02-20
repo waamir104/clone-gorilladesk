@@ -214,16 +214,46 @@
   min-height: 120px;
 }
 
-/* Address row - multiple inputs */
+/* Address row - multiple inputs (sin margen interior para verse juntos) */
 .modal-addcustomer .rows__field.has-many-address {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+  grid-template-columns: 1fr 50px 80px;
+  gap: 0;
 }
 
-.modal-addcustomer .has-many-address .field-street.--first,
+.modal-addcustomer .has-many-address .field-input {
+  margin: 0;
+  border-radius: 0;
+}
+
+.modal-addcustomer .has-many-address .field-street.--first {
+  grid-column: 1 / -1;
+  border-radius: 6px 6px 0 0;
+}
+
 .modal-addcustomer .has-many-address .field-street.--second {
   grid-column: 1 / -1;
+  border-top: none;
+}
+
+.modal-addcustomer .has-many-address .field-city,
+.modal-addcustomer .has-many-address .field-state {
+  border-top: none;
+}
+
+.modal-addcustomer .has-many-address .field-city {
+  border-right: none;
+  border-radius: 0 0 0 6px;
+}
+
+.modal-addcustomer .has-many-address .field-state {
+  border-right: none;
+  border-radius: 0;
+}
+
+.modal-addcustomer .has-many-address .field-zip {
+  border-top: none;
+  border-radius: 0 0 6px 0;
 }
 
 /* Dropdown (dropbtn) */
