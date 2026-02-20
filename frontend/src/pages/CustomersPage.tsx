@@ -419,9 +419,7 @@ export const CustomersPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="flex-betweenitems flex-wrap gap-8 w-100">
+              <div className="flex-betweenitems flex-wrap gap-8 w-100">
               <div className={`flexcenter gap-4 flex-wrap ${selectedCount === 0 ? "is-disable" : ""}`}>
                 <div className="header-items check-items flexcenter">
                   <input
@@ -445,15 +443,22 @@ export const CustomersPage = () => {
                     <div className="arrow"><ArrowDownIcon /></div>
                   </div>
                 </div>
-                <div className="v2-btn-default has-icon header-items">Merge Accounts</div>
+                <div className="v2-btn-default has-icon header-items">
+                  <span className="material-symbols-outlined">graph_8</span>
+                  Merge Accounts
+                </div>
                 <div className="header-items v2-dropdown">
                   <div className="dropbtn v2-btn-default has-icon" tabIndex={0}>
                     <div className="txt-ellipsis mr-1 black-3">Global Override</div>
                     <div className="arrow"><ArrowDownIcon /></div>
                   </div>
                 </div>
-                <div className="v2-btn-default has-icon svg-delete-grey header-items">Delete</div>
+                <div className="v2-btn-default has-icon svg-delete-grey header-items">
+                  <span className="material-symbols-outlined">delete</span>
+                  Delete
+                </div>
               </div>
+            </div>
             </div>
 
             {/* Table */}
