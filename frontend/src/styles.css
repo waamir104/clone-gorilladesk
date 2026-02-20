@@ -200,9 +200,9 @@ section p {
   --utility-color: 124, 58, 237;
   position: relative;
   z-index: 10;
-  width: 72px;
-  min-width: 72px;
-  max-width: 72px;
+  width: 64px;
+  min-width: 64px;
+  max-width: 64px;
   flex-shrink: 0;
   background: #fff;
   display: flex;
@@ -314,6 +314,36 @@ section p {
 
 .sidebar-container .menu-item:hover .tooltiptext {
   opacity: 1;
+}
+
+/* Ocultar tooltip dentro del sidebar (se usa el portal en body para evitar overflow) */
+.sidebar-container .menu-item .tooltiptext {
+  visibility: hidden;
+  opacity: 0;
+}
+.sidebar-container .menu-item:hover .tooltiptext {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Tooltip del sidebar renderizado en portal (en body, siempre visible) */
+.sidebar-tooltip-portal {
+  position: fixed;
+  padding: 4px 8px;
+  min-height: 16px;
+  height: fit-content;
+  width: fit-content;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  background: #1f2937;
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  z-index: 99999;
+  pointer-events: none;
 }
 
 .header-v2 {
