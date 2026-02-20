@@ -575,16 +575,27 @@ section p {
   background: var(--primary-btn-hover-bg);
 }
 
-/* Primary button (add / quick add): texto e icono claros en ambos temas */
+/* Primary button icon (IconPlus): light theme = claro (#fff) */
+.header-v2 .wrap-btn-primary .btn-primary,
+.header-v2 .wrap-btn-primary .btn-primary.svg-white {
+  --color-icon: #fff;
+}
+
+.header-v2 .wrap-btn-primary .btn-primary svg,
+.header-v2 .wrap-btn-primary .btn-primary path {
+  fill: #fff;
+}
+
+/* Primary button (add / quick add): dark theme = rgb(86, 76, 99) */
 .theme-dark .header-v2 .wrap-btn-primary .btn-primary,
 .theme-dark .header-v2 .wrap-btn-primary .btn-primary.svg-white {
-  color: #fff !important;
-  --color-icon: #fff;
+  color: rgb(86, 76, 99);
+  --color-icon: rgb(86, 76, 99);
 }
 
 .theme-dark .header-v2 .wrap-btn-primary .btn-primary svg,
 .theme-dark .header-v2 .wrap-btn-primary .btn-primary path {
-  fill: #fff;
+  fill: rgb(86, 76, 99);
 }
 
 .header-v2 .is-divider {
@@ -1045,7 +1056,7 @@ section p {
 /* ========== Dark theme ========== */
 .theme-dark {
   --primary-btn-bg: rgb(24, 173, 89);
-  --primary-btn-color: #fff;
+  --primary-btn-color: rgb(86, 76, 99);
   --primary-btn-hover-bg: rgb(20, 140, 72);
   --selected-bg: rgba(176, 168, 181, 0.2);
   --selected-color: rgb(176, 168, 181);
@@ -1332,9 +1343,14 @@ section p {
   background: rgba(0, 0, 0, 0.05);
 }
 
-.container-customer-list .sidebar-items.active {
-  background: rgba(124, 58, 237, 0.12);
-  color: #5b21b6;
+/* Mismo estilo que .menu-item.is-active .menu-item__icon en light (--selected-bg, --selected-color) */
+.container-customer-list .sidebar-menu.sidebar-left .sidebar-items.active {
+  background: var(--selected-bg);
+  color: var(--selected-color);
+}
+
+.container-customer-list .sidebar-menu.sidebar-left .sidebar-items.active .count {
+  color: var(--selected-color);
 }
 
 .container-customer-list .sidebar-items.--lead.active {
@@ -1687,6 +1703,26 @@ section p {
 .container-customer-list .header.--filter .v2-btn-default.btn-mapbox:hover {
   background: #f9fafb;
   border-color: #9ca3af;
+}
+
+/* Map / Sub Locations – switch-icon en light theme (mismas dimensiones que dark) */
+.container-customer-list .header.--filter .btn-mapbox .switch-icon {
+  display: inline-flex;
+  align-items: center;
+  width: 32px;
+  height: 18px;
+  border-radius: 9px;
+  background: #e5e7eb;
+  padding: 2px;
+  margin-left: 0.25rem;
+}
+
+.container-customer-list .header.--filter .btn-mapbox .switch-icon__dots {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #9ca3af;
+  transition: transform 0.2s;
 }
 
 /* Active status dropdown – light theme (24px height, 4px radius, mismo padding/gap que dark) */
@@ -2099,6 +2135,31 @@ section p {
   line-height: 1.4;
 }
 
+.container-customer-list .customer-list-loading .customer-list-loading__inner {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  padding: 2rem;
+}
+
+.container-customer-list .customer-list-loading__icon {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  animation: customer-list-loading-spin 1s linear infinite;
+}
+
+@keyframes customer-list-loading-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .container-customer-list .rows .col {
   min-width: 0;
 }
@@ -2352,15 +2413,16 @@ section p {
   background: rgba(255, 255, 255, 0.06);
 }
 
+/* Mismo estilo que .menu-item.is-active .menu-item__icon en dark (bg rgb(176,168,181), color rgb(10,12,13)) */
 .theme-dark .container-customer-list .sidebar-menu.sidebar-left .sidebar-items.active,
 .container-customer-list.customer-list-dark .sidebar-menu.sidebar-left .sidebar-items.active {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: rgb(176, 168, 181);
+  color: rgb(10, 12, 13);
 }
 
 .theme-dark .container-customer-list .sidebar-menu.sidebar-left .sidebar-items.active .count,
 .container-customer-list.customer-list-dark .sidebar-menu.sidebar-left .sidebar-items.active .count {
-  color: #fff;
+  color: rgb(10, 12, 13);
 }
 
 .theme-dark .container-customer-list .sidebar-menu.sidebar-left .sidebar-items.--lead .count.count--lead,
@@ -2480,7 +2542,7 @@ section p {
 .container-customer-list.customer-list-dark .customer-list-header .header-items.v2-btn-main.--bg-green {
   background: var(--cl-green);
   border-color: var(--cl-green);
-  color: #fff !important;
+  color: rgb(86, 76, 99);
 }
 
 .theme-dark .container-customer-list .customer-list-header .v2-btn-main.--bg-green:hover,
@@ -2489,7 +2551,7 @@ section p {
 .container-customer-list.customer-list-dark .customer-list-header .header-items.v2-btn-main.--bg-green:hover {
   background: #16a34a;
   border-color: #16a34a;
-  color: #fff !important;
+  color: rgb(86, 76, 99);
 }
 
 /* Alphabet – como links (sin borde ni bg, azul) */

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import * as XLSX from "xlsx-js-style";
 
@@ -42,15 +42,20 @@ const ArrowDownIcon = () => (
 
 const ALPHABET = ["A-Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "Y", "Z"];
 
-const SIDEBAR_ITEMS = [
+type SidebarItem = {
+  id: string;
+  label: string;
+  count: number;
+  active?: boolean;
+  tooltip?: string;
+  red?: boolean;
+  disabled?: boolean;
+};
+
+const SIDEBAR_ITEMS: SidebarItem[] = [
   { id: "total", label: "Total Customers", count: 1841, active: true, tooltip: "Total customers counts your active and inactive customers. This total does not include leads." },
   { id: "with-service", label: "With a Service", count: 354 },
   { id: "without-service", label: "Without a Service", count: 1487 },
-  { id: "leads", label: "Total Leads", count: 1, lead: true, tooltip: "All leads and new customers without a completed job. After 90 days, new customers will be removed from this list." },
-  { id: "bounced-emails", label: "Bounced Emails", red: true, disabled: true, tooltip: "Bounced emails are undeliverable emails and should be checked or replaced with a new valid email." },
-  { id: "bounced-phones", label: "Bounced Phones", red: true, disabled: true, tooltip: "Bounced phones are undeliverable phones and should be checked or replaced with a new valid phone." },
-  { id: "expired-cc", label: "Expired Credit Card", red: true, disabled: true },
-  { id: "expiring-60", label: "Expiring < 60 Days", disabled: true },
 ];
 
 const MOCK_CUSTOMERS = [
@@ -89,9 +94,16 @@ export const CustomersPage = () => {
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [selectAll, setSelectAll] = useState(false);
   const [activeSidebarId, setActiveSidebarId] = useState<string>("total");
+  const [customersLoading, setCustomersLoading] = useState(false);
   const [internalSidebarOpen, setInternalSidebarOpen] = useState(true);
   const [sortColumn, setSortColumn] = useState<SortColumn | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+
+  useEffect(() => {
+    if (!customersLoading) return;
+    const t = setTimeout(() => setCustomersLoading(false), 4000);
+    return () => clearTimeout(t);
+  }, [customersLoading]);
 
   const sortedCustomers = useMemo(() => {
     if (!sortColumn) return [...MOCK_CUSTOMERS];
@@ -273,20 +285,23 @@ export const CustomersPage = () => {
       <div id="wrapper-side-menu-customer-list" className="sidebar-menu sidebar-left scrolls" aria-hidden={!internalSidebarOpen}>
         <ul className="sidebar-menu__nav flex-column">
           {SIDEBAR_ITEMS.map((item, index) => {
-            const showDivider =
-              (item.id === "leads" || item.id === "bounced-emails" || item.id === "expired-cc") && index > 0;
             return (
-              <React.Fragment key={item.id}>
-                {showDivider && (
-                  <li className="is-divider --horizontal my-2 mx-1" aria-hidden="true" />
-                )}
-                <li>
+              <li key={item.id}>
                   <div
                     role="button"
                     tabIndex={0}
-                    className={`sidebar-items flex-betweenitems ${activeSidebarId === item.id ? "active" : ""} ${item.lead ? "--lead" : ""} ${item.red ? "--red" : ""} ${item.disabled ? "is-disable" : ""}`}
-                    onClick={() => !item.disabled && setActiveSidebarId(item.id)}
-                    onKeyDown={(e) => !item.disabled && (e.key === "Enter" || e.key === " ") && setActiveSidebarId(item.id)}
+                    className={`sidebar-items flex-betweenitems ${activeSidebarId === item.id ? "active" : ""} ${item.red ? "--red" : ""} ${item.disabled ? "is-disable" : ""}`}
+                    onClick={() => {
+                      if (item.disabled) return;
+                      setActiveSidebarId(item.id);
+                      setCustomersLoading(true);
+                    }}
+                    onKeyDown={(e) => {
+                      if (!item.disabled && (e.key === "Enter" || e.key === " ")) {
+                        setActiveSidebarId(item.id);
+                        setCustomersLoading(true);
+                      }
+                    }}
                   >
                     <div className="title flex-1">
                       <p className="txt-ellipsis" title={item.label}>
@@ -300,13 +315,12 @@ export const CustomersPage = () => {
                       )}
                     </div>
                     {!item.disabled && item.count !== undefined && (
-                      <p className={`count ${item.lead ? "count--lead" : ""}`} title={String(item.count)}>
+                      <p className="count" title={String(item.count)}>
                         {item.count}
                       </p>
                     )}
                   </div>
                 </li>
-              </React.Fragment>
             );
           })}
         </ul>
@@ -636,7 +650,18 @@ export const CustomersPage = () => {
 
                   {/* Table body */}
                   <div className="tables-list">
-                    {filteredCustomers.length === 0 ? (
+                    {customersLoading ? (
+                      <div className="rows rows--empty customer-list-loading">
+                        <div className="col col--span-all customer-list-loading__inner">
+                          <img
+                            src="/shared/grass icon.png"
+                            alt=""
+                            className="customer-list-loading__icon"
+                            aria-hidden
+                          />
+                        </div>
+                      </div>
+                    ) : filteredCustomers.length === 0 ? (
                       <div className="rows rows--empty">
                         <div className="col col--span-all customer-list-empty-msg">
                           No hay resultados
