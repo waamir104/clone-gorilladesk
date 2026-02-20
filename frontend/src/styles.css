@@ -205,7 +205,6 @@ section p {
   max-width: 72px;
   flex-shrink: 0;
   background: #fff;
-  border-right: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
   padding: 0.75rem 0;
@@ -214,9 +213,9 @@ section p {
 }
 
 .sidebar-container.active {
-  width: 72px;
-  min-width: 72px;
-  max-width: 72px;
+  width: 64px;
+  min-width: 64px;
+  max-width: 64px;
 }
 
 .sidebar-container__content.flex-column {
