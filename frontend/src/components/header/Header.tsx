@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   IconArrowDown,
@@ -39,15 +40,30 @@ function useEffectiveDark(theme: Theme) {
   return theme === "dark" || (theme === "system" && prefersDark);
 }
 
+const HEADER_TOOLTIP_OFFSET = 8;
+
 export const Header = ({ isSidebarOpen = true, onToggleSidebar }: HeaderProps) => {
   const { pathname } = useLocation();
   const selectedOption = getSelectedOption(pathname);
   const [isCalendarMenuOpen, setCalendarMenuOpen] = useState(false);
   const [theme, setTheme] = useState<Theme>("system");
   const [isModeMenuOpen, setModeMenuOpen] = useState(false);
+  const [headerTooltip, setHeaderTooltip] = useState<{ label: string; top: number; left: number } | null>(null);
   const effectiveDark = useEffectiveDark(theme);
   const calendarDropdownRef = useRef<HTMLDivElement>(null);
   const modeDropdownRef = useRef<HTMLDivElement>(null);
+
+  const showHeaderTooltip = useCallback((label: string, el: HTMLElement | null) => {
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    setHeaderTooltip({
+      label,
+      top: rect.bottom + HEADER_TOOLTIP_OFFSET,
+      left: rect.left + rect.width / 2,
+    });
+  }, []);
+
+  const hideHeaderTooltip = useCallback(() => setHeaderTooltip(null), []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("theme-dark", effectiveDark);
@@ -72,12 +88,31 @@ export const Header = ({ isSidebarOpen = true, onToggleSidebar }: HeaderProps) =
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isCalendarMenuOpen, isModeMenuOpen]);
 
+  const headerTooltipPortal =
+    headerTooltip &&
+    createPortal(
+      <span
+        className="header-tooltip-portal"
+        style={{
+          position: "fixed",
+          top: headerTooltip.top,
+          left: headerTooltip.left,
+          transform: "translate(-50%, 0)",
+          margin: 0,
+        }}
+      >
+        {headerTooltip.label}
+      </span>,
+      document.body
+    );
+
   return (
     <div
       className="header-v2"
       id="header_v2"
       style={{ ["--background" as string]: "#FFFFFF" }}
     >
+      {headerTooltipPortal}
       <div className="container flex-betweenitems">
         {/* Left section */}
         <div className="container__header header-v2-left h-100">
@@ -187,14 +222,24 @@ export const Header = ({ isSidebarOpen = true, onToggleSidebar }: HeaderProps) =
             <div className="notify-btn tooltip dp-hide" title="SMS">SMS</div>
           </div>
           <div className="boxs-notification notifi nav-notification tabs-notify">
-            <div className="btn-notification notify-btn tooltip" title="Notifications">
-            <span className="material-symbols-outlined">siren</span>
-          </div>
+            <div
+              className="btn-notification notify-btn tooltip"
+              title="Notifications"
+              onMouseEnter={(e) => showHeaderTooltip("Notifications", e.currentTarget)}
+              onMouseLeave={hideHeaderTooltip}
+            >
+              <span className="material-symbols-outlined">siren</span>
+            </div>
           </div>
           <div className="boxs-notification notifi nav-inbox">
-            <div className="notify-btn tooltip" title="Inbox">
-            <span className="material-symbols-outlined">mail</span>
-          </div>
+            <div
+              className="notify-btn tooltip"
+              title="Inbox"
+              onMouseEnter={(e) => showHeaderTooltip("Inbox", e.currentTarget)}
+              onMouseLeave={hideHeaderTooltip}
+            >
+              <span className="material-symbols-outlined">mail</span>
+            </div>
           </div>
           <div className="is-divider ml-1" />
           <div className="nav-help v2-dropdown">
