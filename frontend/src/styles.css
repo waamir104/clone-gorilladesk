@@ -575,6 +575,18 @@ section p {
   background: var(--primary-btn-hover-bg);
 }
 
+/* Primary button (add / quick add): texto e icono claros en ambos temas */
+.theme-dark .header-v2 .wrap-btn-primary .btn-primary,
+.theme-dark .header-v2 .wrap-btn-primary .btn-primary.svg-white {
+  color: #fff !important;
+  --color-icon: #fff;
+}
+
+.theme-dark .header-v2 .wrap-btn-primary .btn-primary svg,
+.theme-dark .header-v2 .wrap-btn-primary .btn-primary path {
+  fill: #fff;
+}
+
 .header-v2 .is-divider {
   width: 1px;
   height: 24px;
@@ -1503,13 +1515,13 @@ section p {
 .customer-list-header .v2-btn-main.--bg-green {
   background: var(--primary-btn-bg);
   border-color: var(--primary-btn-bg);
-  color: rgb(10, 12, 13);
+  color: #fff;
 }
 
 .customer-list-header .v2-btn-main.--bg-green:hover {
   background: var(--primary-btn-hover-bg);
   border-color: var(--primary-btn-hover-bg);
-  color: rgb(10, 12, 13);
+  color: #fff;
 }
 
 .customer-list-header .export {
@@ -1611,7 +1623,7 @@ section p {
   min-height: 0;
 }
 
-/* Header con opciones (Map, Columns, Status, Tags, First name, Sub Locations, Active, acciones masivas) – mismo borde que la lista */
+/* Header con opciones (Map, Columns, Status, Tags, First name, Sub Locations, Active, acciones masivas) – light theme base */
 .container-customer-list .header.--filter,
 .container-customer-list .wrap-tables > .header.--filter {
   display: flex;
@@ -1619,15 +1631,18 @@ section p {
   align-items: stretch;
   flex-wrap: wrap;
   gap: 0.5rem;
-  background-color: rgb(10, 12, 13);
+  background-color: #fff;
   padding: 8px 16px;
   border: 1px solid #e5e7eb;
   border-bottom: none;
   border-radius: 8px 8px 0 0;
 }
 
+.theme-dark .container-customer-list .header.--filter,
+.theme-dark .container-customer-list .wrap-tables > .header.--filter,
 .container-customer-list.customer-list-dark .header.--filter,
 .container-customer-list.customer-list-dark .wrap-tables > .header.--filter {
+  background-color: rgb(10, 12, 13);
   border-color: var(--cl-dark-border);
 }
 
@@ -1654,20 +1669,34 @@ section p {
   stroke: var(--color-icon);
 }
 
-/* Map & Sub Locations – mismo borde y radius que search-ip, Import y Active */
+/* Map & Sub Locations – light theme (mismas dimensiones que dark: 32px height, 14px font) */
 .container-customer-list .header.--filter .v2-btn-default.btn-mapbox {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 32px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  padding-left: 12px;
+  padding-right: 12px;
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
   border-radius: 4px;
+  background: #fff;
+  color: #374151;
 }
 
-/* Active status dropdown – dark pill style */
+.container-customer-list .header.--filter .v2-btn-default.btn-mapbox:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+/* Active status dropdown – light theme (24px height, 4px radius, mismo padding/gap que dark) */
 .container-customer-list .header.--filter .switch-action .dropbtn {
   height: 24px;
-  background: #1c1c1c;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
   padding: 0.35rem 0.6rem;
-  color: #cccccc;
+  color: #374151;
   font-size: 0.8125rem;
   font-weight: 500;
   display: inline-flex;
@@ -1676,36 +1705,36 @@ section p {
 }
 
 .container-customer-list .header.--filter .switch-action .dropbtn .txt-ellipsis {
-  color: #cccccc;
+  color: #374151;
   display: inline-flex;
   align-items: center;
   line-height: 1;
 }
 
 .container-customer-list .header.--filter .switch-action .dropbtn .arrow svg path {
-  stroke: #cccccc;
+  stroke: #374151;
   fill: none;
 }
 
 .container-customer-list .header.--filter .switch-action .dropbtn:hover {
-  background: #252525;
-  border-color: rgba(255, 255, 255, 0.15);
-  color: #e5e5e5;
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #1f2937;
 }
 
 .container-customer-list .header.--filter .switch-action .dropbtn:hover .txt-ellipsis,
 .container-customer-list .header.--filter .switch-action .dropbtn:hover .arrow svg path {
-  color: #e5e5e5;
-  stroke: #e5e5e5;
+  color: #1f2937;
+  stroke: #1f2937;
 }
 
-/* Mark as – mismos estilos que Active */
+/* Mark as – light theme */
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.items {
-  background: #1c1c1c;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #fff;
+  border: 1px solid #d1d5db;
   border-radius: 6px;
   padding: 0.35rem 0.6rem;
-  color: #cccccc;
+  color: #374151;
   font-size: 0.8125rem;
   font-weight: 500;
   display: inline-flex;
@@ -1715,30 +1744,30 @@ section p {
 
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.items .txt-ellipsis,
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.items .arrow svg path {
-  color: #cccccc;
-  stroke: #cccccc;
+  color: #374151;
+  stroke: #374151;
   fill: none;
 }
 
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.items:hover {
-  background: #252525;
-  border-color: rgba(255, 255, 255, 0.15);
-  color: #e5e5e5;
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #1f2937;
 }
 
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.items:hover .txt-ellipsis,
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.items:hover .arrow svg path {
-  color: #e5e5e5;
-  stroke: #e5e5e5;
+  color: #1f2937;
+  stroke: #1f2937;
 }
 
-/* Global Override – mismos estilos que Active / Mark as */
+/* Global Override – light theme */
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon {
-  background: #1c1c1c;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #fff;
+  border: 1px solid #d1d5db;
   border-radius: 6px;
   padding: 0.35rem 0.6rem;
-  color: #cccccc;
+  color: #374151;
   font-size: 0.8125rem;
   font-weight: 500;
   display: inline-flex;
@@ -1748,21 +1777,21 @@ section p {
 
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon .txt-ellipsis,
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon .arrow svg path {
-  color: #cccccc;
-  stroke: #cccccc;
+  color: #374151;
+  stroke: #374151;
   fill: none;
 }
 
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon:hover {
-  background: #252525;
-  border-color: rgba(255, 255, 255, 0.15);
-  color: #e5e5e5;
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #1f2937;
 }
 
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon:hover .txt-ellipsis,
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon:hover .arrow svg path {
-  color: #e5e5e5;
-  stroke: #e5e5e5;
+  color: #1f2937;
+  stroke: #1f2937;
 }
 
 /* Customer list dropdown menus (Active, Mark as, Global Override) – single option "placeh" */
@@ -1778,8 +1807,8 @@ section p {
   margin-top: 4px;
   width: max-content;
   min-width: max-content;
-  background: #1c1c1c;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #fff;
+  border: 1px solid #e5e7eb;
   border-radius: 4px;
   padding: 4px 0;
   list-style: none;
@@ -1803,7 +1832,7 @@ section p {
   font-size: 14px;
   text-align: left;
   border-radius: 4px;
-  color: #cccccc;
+  color: #374151;
   cursor: pointer;
   width: 100%;
   box-sizing: border-box;
@@ -1811,11 +1840,12 @@ section p {
 }
 
 .container-customer-list .header.--filter .v2-dropdown__menu--customer-list .items:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: #f3f4f6;
 }
 
 .container-customer-list .header.--filter .v2-dropdown__menu--customer-list .items.is-selected {
-  background: rgba(255, 255, 255, 0.08);
+  background: #eff6ff;
+  color: #1d4ed8;
 }
 
 .container-customer-list .header.--filter .v2-dropdown__menu--customer-list .items.has-icon {
@@ -1830,13 +1860,13 @@ section p {
   flex-shrink: 0;
 }
 
-/* Merge Accounts – mismos estilos que Active / Mark as / Global Override */
+/* Merge Accounts – light theme */
 .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.header-items:not(.svg-delete-grey) {
-  background: #1c1c1c;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #fff;
+  border: 1px solid #d1d5db;
   border-radius: 6px;
   padding: 0.35rem 0.6rem;
-  color: #cccccc;
+  color: #374151;
   font-size: 0.8125rem;
   font-weight: 500;
   display: inline-flex;
@@ -1846,9 +1876,9 @@ section p {
 
 .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.header-items:not(.svg-delete-grey) svg path,
 .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.header-items:not(.svg-delete-grey) .material-symbols-outlined {
-  stroke: #cccccc;
+  stroke: #374151;
   fill: none;
-  color: #cccccc;
+  color: #374151;
 }
 
 .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.header-items .material-symbols-outlined {
@@ -1856,24 +1886,24 @@ section p {
 }
 
 .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.header-items:not(.svg-delete-grey):hover {
-  background: #252525;
-  border-color: rgba(255, 255, 255, 0.15);
-  color: #e5e5e5;
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #1f2937;
 }
 
 .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.header-items:not(.svg-delete-grey):hover svg path,
 .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.header-items:not(.svg-delete-grey):hover .material-symbols-outlined {
-  stroke: #e5e5e5;
-  color: #e5e5e5;
+  stroke: #1f2937;
+  color: #1f2937;
 }
 
-/* Delete – mismo contenedor y tono que Active/Mark as/Global Override */
+/* Delete – light theme */
 .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.svg-delete-grey.header-items {
-  background: #1c1c1c;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #fff;
+  border: 1px solid #d1d5db;
   border-radius: 6px;
   padding: 0.35rem 0.6rem;
-  color: #cccccc;
+  color: #374151;
   font-size: 0.8125rem;
   font-weight: 500;
   display: inline-flex;
@@ -1882,24 +1912,82 @@ section p {
 }
 
 .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.svg-delete-grey.header-items .material-symbols-outlined {
-  color: #cccccc;
+  color: #374151;
 }
 
 .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.svg-delete-grey.header-items:hover {
-  background: #252525;
-  border-color: rgba(255, 255, 255, 0.15);
-  color: #e5e5e5;
+  background: #fef2f2;
+  border-color: #fca5a5;
+  color: #dc2626;
 }
 
 .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.svg-delete-grey.header-items:hover .material-symbols-outlined {
-  color: #e5e5e5;
+  color: #dc2626;
 }
 
-/* Columns, Status, Tags, First name – same blue as export CSV/Excel */
-.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn,
+/* Columns, Status, Tags, First name – light theme (mismas dimensiones que dark: 32px height, 14px font, padding, gap) */
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  height: 32px;
+  padding: 0 0.75rem;
+  font-size: 14px;
+  background: #eff6ff;
+  border: 1px solid #93c5fd;
+  border-radius: 4px;
+  color: #2563eb;
+}
+
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn:hover {
+  background: #dbeafe;
+  border-color: #60a5fa;
+}
+
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .dropbtn__label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 .container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .txt-ellipsis,
 .container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .dropbtn__label {
   color: #2563eb;
+}
+
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .budget {
+  font-size: 11px;
+  padding: 0 0.35rem;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #2563eb;
+  color: #fff;
+}
+
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .budget.--grey {
+  font-size: 11px;
+  height: 16px;
+  padding: 0 0.35rem;
+  border-radius: 8px;
+  min-width: auto;
+  width: auto;
+  background: #2563eb;
+  color: #fff;
+}
+
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .arrow .material-symbols-outlined {
+  font-size: 20px;
 }
 
 .container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .arrow .material-symbols-outlined,
@@ -1920,6 +2008,25 @@ section p {
   border-radius: 4px;
   background: rgba(124, 58, 237, 0.15);
   color: #5b21b6;
+}
+
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .budget {
+  font-size: 11px;
+  padding: 0 0.35rem;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #2563eb;
+  color: #fff;
+}
+
+.container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .budget.--grey {
+  border-radius: 8px;
+  min-width: auto;
+  width: auto;
 }
 
 .container-customer-list .v2-btn-default .budget.--grey {
@@ -2368,32 +2475,39 @@ section p {
 }
 
 .theme-dark .container-customer-list .customer-list-header .v2-btn-main.--bg-green,
-.container-customer-list.customer-list-dark .customer-list-header .v2-btn-main.--bg-green {
+.theme-dark .container-customer-list .customer-list-header .header-items.v2-btn-main.--bg-green,
+.container-customer-list.customer-list-dark .customer-list-header .v2-btn-main.--bg-green,
+.container-customer-list.customer-list-dark .customer-list-header .header-items.v2-btn-main.--bg-green {
   background: var(--cl-green);
   border-color: var(--cl-green);
-  color: rgb(10, 12, 13);
+  color: #fff !important;
 }
 
 .theme-dark .container-customer-list .customer-list-header .v2-btn-main.--bg-green:hover,
-.container-customer-list.customer-list-dark .customer-list-header .v2-btn-main.--bg-green:hover {
+.theme-dark .container-customer-list .customer-list-header .header-items.v2-btn-main.--bg-green:hover,
+.container-customer-list.customer-list-dark .customer-list-header .v2-btn-main.--bg-green:hover,
+.container-customer-list.customer-list-dark .customer-list-header .header-items.v2-btn-main.--bg-green:hover {
   background: #16a34a;
   border-color: #16a34a;
-  color: rgb(10, 12, 13);
+  color: #fff !important;
 }
 
 /* Alphabet – como links (sin borde ni bg, azul) */
+.theme-dark .container-customer-list .filter-alphabet .alphabet-item,
 .container-customer-list.customer-list-dark .filter-alphabet .alphabet-item {
   background: transparent;
   border: none;
   color: var(--cl-blue);
 }
 
+.theme-dark .container-customer-list .filter-alphabet .alphabet-item:hover,
 .container-customer-list.customer-list-dark .filter-alphabet .alphabet-item:hover {
   background: transparent;
   text-decoration: underline;
   color: #93c5fd;
 }
 
+.theme-dark .container-customer-list .filter-alphabet .alphabet-item.is-active,
 .container-customer-list.customer-list-dark .filter-alphabet .alphabet-item.is-active {
   background: rgba(59, 130, 246, 0.2);
   border: 1px solid var(--cl-blue);
@@ -2404,6 +2518,7 @@ section p {
 }
 
 /* Filter bar: Columns, Status, Tags – estilo imagen (fondo oscuro, texto/badge azul, 32px height, 14px font) */
+.theme-dark .container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn,
 .container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn {
   display: flex;
   align-items: center;
@@ -2418,12 +2533,14 @@ section p {
   color: #2a84ff;
 }
 
+.theme-dark .container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .dropbtn__label,
 .container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn .dropbtn__label {
   display: flex;
   align-items: center;
   gap: 0.35rem;
 }
 
+.theme-dark .container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .budget,
 .container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn .budget {
   background: #2a84ff;
   color: #fff;
@@ -2437,6 +2554,7 @@ section p {
   justify-content: center;
 }
 
+.theme-dark .container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .budget.--grey,
 .container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn .budget.--grey {
   background: #2a84ff;
   color: #fff;
@@ -2448,21 +2566,26 @@ section p {
   width: auto;
 }
 
+.theme-dark .container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .arrow,
 .container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn .arrow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
+.theme-dark .container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .arrow .material-symbols-outlined,
 .container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn .arrow .material-symbols-outlined {
   font-size: 20px;
   color: #2a84ff;
 }
 
+.theme-dark .container-customer-list .header.--filter .header-items.has-bg-blue .dropbtn .arrow svg,
 .container-customer-list.customer-list-dark .header.--filter .header-items.has-bg-blue .dropbtn .arrow svg {
   stroke: #2a84ff;
 }
 
+.theme-dark .container-customer-list .header.--filter .v2-btn-default:not(.selection) .dropbtn,
+.theme-dark .container-customer-list .header.--filter .v2-btn-default.btn-mapbox,
 .container-customer-list.customer-list-dark .header.--filter .v2-btn-default:not(.selection) .dropbtn,
 .container-customer-list.customer-list-dark .header.--filter .v2-btn-default.btn-mapbox {
   background: rgb(10, 12, 13);
@@ -2471,6 +2594,7 @@ section p {
   border-radius: 4px;
 }
 
+.theme-dark .container-customer-list .header.--filter .v2-btn-default.btn-mapbox,
 .container-customer-list.customer-list-dark .header.--filter .v2-btn-default.btn-mapbox {
   height: 32px;
   font-size: 14px;
@@ -2481,6 +2605,7 @@ section p {
   box-sizing: border-box;
 }
 
+.theme-dark .container-customer-list .header.--filter .switch-action .dropbtn,
 .container-customer-list.customer-list-dark .header.--filter .switch-action .dropbtn {
   height: 24px;
   background: rgb(10, 12, 13);
@@ -2489,6 +2614,7 @@ section p {
   border-radius: 4px;
 }
 
+.theme-dark .container-customer-list .header.--filter .switch-action .dropbtn .txt-ellipsis,
 .container-customer-list.customer-list-dark .header.--filter .switch-action .dropbtn .txt-ellipsis {
   color: #aea79c;
   display: inline-flex;
@@ -2496,6 +2622,7 @@ section p {
   line-height: 1;
 }
 
+.theme-dark .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.items,
 .container-customer-list.customer-list-dark .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.items {
   background: rgb(10, 12, 13);
   border-color: var(--cl-dark-border);
@@ -2503,12 +2630,15 @@ section p {
   border-radius: 4px;
 }
 
+.theme-dark .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.items .txt-ellipsis,
+.theme-dark .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.items .arrow svg path,
 .container-customer-list.customer-list-dark .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.items .txt-ellipsis,
 .container-customer-list.customer-list-dark .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.items .arrow svg path {
   color: var(--cl-text);
   stroke: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon,
 .container-customer-list.customer-list-dark .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon {
   background: rgb(10, 12, 13);
   border-color: var(--cl-dark-border);
@@ -2516,12 +2646,15 @@ section p {
   border-radius: 4px;
 }
 
+.theme-dark .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon .txt-ellipsis,
+.theme-dark .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon .arrow svg path,
 .container-customer-list.customer-list-dark .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon .txt-ellipsis,
 .container-customer-list.customer-list-dark .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon .arrow svg path {
   color: var(--cl-text);
   stroke: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.header-items:not(.svg-delete-grey),
 .container-customer-list.customer-list-dark .header.--filter .flex-betweenitems .v2-btn-default.has-icon.header-items:not(.svg-delete-grey) {
   background: rgb(10, 12, 13);
   border-color: var(--cl-dark-border);
@@ -2529,10 +2662,12 @@ section p {
   border-radius: 4px;
 }
 
+.theme-dark .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.header-items:not(.svg-delete-grey) svg path,
 .container-customer-list.customer-list-dark .header.--filter .flex-betweenitems .v2-btn-default.has-icon.header-items:not(.svg-delete-grey) svg path {
   stroke: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.svg-delete-grey.header-items,
 .container-customer-list.customer-list-dark .header.--filter .flex-betweenitems .v2-btn-default.has-icon.svg-delete-grey.header-items {
   background: rgb(10, 12, 13);
   border-color: var(--cl-dark-border);
@@ -2540,22 +2675,27 @@ section p {
   border-radius: 4px;
 }
 
+.theme-dark .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.svg-delete-grey.header-items .material-symbols-outlined,
 .container-customer-list.customer-list-dark .header.--filter .flex-betweenitems .v2-btn-default.has-icon.svg-delete-grey.header-items .material-symbols-outlined {
   color: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.svg-delete-grey.header-items:hover,
 .container-customer-list.customer-list-dark .header.--filter .flex-betweenitems .v2-btn-default.has-icon.svg-delete-grey.header-items:hover {
   color: #e5e5e5;
 }
 
+.theme-dark .container-customer-list .header.--filter .flex-betweenitems .v2-btn-default.has-icon.svg-delete-grey.header-items:hover .material-symbols-outlined,
 .container-customer-list.customer-list-dark .header.--filter .flex-betweenitems .v2-btn-default.has-icon.svg-delete-grey.header-items:hover .material-symbols-outlined {
   color: #e5e5e5;
 }
 
+.theme-dark .container-customer-list .header.--filter .v2-btn-default .arrow svg,
 .container-customer-list.customer-list-dark .header.--filter .v2-btn-default .arrow svg {
   stroke: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .header.--filter .btn-mapbox .switch-icon,
 .container-customer-list.customer-list-dark .header.--filter .btn-mapbox .switch-icon {
   display: inline-flex;
   align-items: center;
@@ -2567,6 +2707,7 @@ section p {
   margin-left: 0.25rem;
 }
 
+.theme-dark .container-customer-list .header.--filter .btn-mapbox .switch-icon__dots,
 .container-customer-list.customer-list-dark .header.--filter .btn-mapbox .switch-icon__dots {
   width: 14px;
   height: 14px;
@@ -2575,16 +2716,43 @@ section p {
   transition: transform 0.2s;
 }
 
+/* Dropdown menus (Active, Mark as, Global Override) – dark theme */
+.theme-dark .container-customer-list .header.--filter .v2-dropdown__menu.v2-dropdown__menu--customer-list,
+.container-customer-list.customer-list-dark .header.--filter .v2-dropdown__menu.v2-dropdown__menu--customer-list {
+  background: rgb(10, 12, 13);
+  border-color: var(--cl-dark-border);
+}
+
+.theme-dark .container-customer-list .header.--filter .v2-dropdown__menu--customer-list .items,
+.container-customer-list.customer-list-dark .header.--filter .v2-dropdown__menu--customer-list .items {
+  color: var(--cl-text);
+}
+
+.theme-dark .container-customer-list .header.--filter .v2-dropdown__menu--customer-list .items:hover,
+.container-customer-list.customer-list-dark .header.--filter .v2-dropdown__menu--customer-list .items:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.theme-dark .container-customer-list .header.--filter .v2-dropdown__menu--customer-list .items.is-selected,
+.container-customer-list.customer-list-dark .header.--filter .v2-dropdown__menu--customer-list .items.is-selected {
+  background: rgba(255, 255, 255, 0.08);
+}
+
 /* Bulk actions bar – faded when nothing selected */
+.theme-dark .container-customer-list .flex-betweenitems .flexcenter.is-disable,
 .container-customer-list.customer-list-dark .flex-betweenitems .flexcenter.is-disable {
   opacity: 0.6;
 }
 
+.theme-dark .container-customer-list .flex-betweenitems .black,
+.theme-dark .container-customer-list .flex-betweenitems .black-darker2,
 .container-customer-list.customer-list-dark .flex-betweenitems .black,
 .container-customer-list.customer-list-dark .flex-betweenitems .black-darker2 {
   color: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .flex-betweenitems .v2-btn-default,
+.theme-dark .container-customer-list .flex-betweenitems .v2-dropdown .dropbtn,
 .container-customer-list.customer-list-dark .flex-betweenitems .v2-btn-default,
 .container-customer-list.customer-list-dark .flex-betweenitems .v2-dropdown .dropbtn {
   background: var(--cl-dark-panel);
@@ -2592,22 +2760,27 @@ section p {
   color: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .item-checkbox label,
 .container-customer-list.customer-list-dark .item-checkbox label {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
+.theme-dark .container-customer-list .check-items input:checked + .item-checkbox label,
 .container-customer-list.customer-list-dark .check-items input:checked + .item-checkbox label {
   background: var(--cl-blue);
   border-color: var(--cl-blue);
 }
 
 /* Table */
+.theme-dark .container-customer-list .tables,
 .container-customer-list.customer-list-dark .tables {
   background: var(--cl-dark-panel);
   border-color: var(--cl-dark-border);
 }
 
 /* Mismo bg que el header de la app en dark theme */
+.theme-dark .container-customer-list .rows.--header,
+.theme-dark .container-customer-list .rows.--fixed.--header,
 .container-customer-list.customer-list-dark .rows.--header,
 .container-customer-list.customer-list-dark .rows.--fixed.--header {
   background: rgb(10, 12, 13);
@@ -2616,6 +2789,12 @@ section p {
   font-weight: 600;
 }
 
+.theme-dark .container-customer-list .rows.--header .has-orderby,
+.theme-dark .container-customer-list .rows.--header .has-orderby .orderby-txt,
+.theme-dark .container-customer-list .rows.--header .has-orderby .icon.sort-indicator.material-symbols-outlined,
+.theme-dark .container-customer-list .rows.--fixed.--header .has-orderby,
+.theme-dark .container-customer-list .rows.--fixed.--header .has-orderby .orderby-txt,
+.theme-dark .container-customer-list .rows.--fixed.--header .has-orderby .icon.sort-indicator.material-symbols-outlined,
 .container-customer-list.customer-list-dark .rows.--header .has-orderby,
 .container-customer-list.customer-list-dark .rows.--header .has-orderby .orderby-txt,
 .container-customer-list.customer-list-dark .rows.--header .has-orderby .icon.sort-indicator.material-symbols-outlined,
@@ -2625,46 +2804,57 @@ section p {
   color: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .tables-list .rows,
 .container-customer-list.customer-list-dark .tables-list .rows {
   border-bottom-color: var(--cl-dark-border);
   color: var(--cl-text);
 }
 
 /* Filas alternas: impares rgb(14, 17, 18), pares rgb(10, 12, 13) */
+.theme-dark .container-customer-list .tables-list .rows:nth-child(odd),
 .container-customer-list.customer-list-dark .tables-list .rows:nth-child(odd) {
   background: rgb(14, 17, 18);
 }
+.theme-dark .container-customer-list .tables-list .rows:nth-child(even),
 .container-customer-list.customer-list-dark .tables-list .rows:nth-child(even) {
   background: rgb(10, 12, 13);
 }
 
+.theme-dark .container-customer-list .tables-list .rows:hover,
 .container-customer-list.customer-list-dark .tables-list .rows:hover {
   background: rgba(255, 255, 255, 0.04);
 }
 
+.theme-dark .container-customer-list .rows--empty .col.customer-list-empty-msg,
 .container-customer-list.customer-list-dark .rows--empty .col.customer-list-empty-msg {
   color: #aea79c;
 }
 
+.theme-dark .container-customer-list .rows.rows--empty:hover,
 .container-customer-list.customer-list-dark .rows.rows--empty:hover {
   background: transparent;
 }
 
+.theme-dark .container-customer-list .rows .col a,
+.theme-dark .container-customer-list .rows .col .name,
 .container-customer-list.customer-list-dark .rows .col a,
 .container-customer-list.customer-list-dark .rows .col .name {
   color: var(--cl-purple);
 }
 
+.theme-dark .container-customer-list .rows .col a:hover,
 .container-customer-list.customer-list-dark .rows .col a:hover {
   color: #c4b5fd;
 }
 
+.theme-dark .container-customer-list .v2-btn-default.--purple,
 .container-customer-list.customer-list-dark .v2-btn-default.--purple {
   background: transparent;
   border-color: transparent;
   color: var(--cl-purple);
 }
 
+.theme-dark .container-customer-list .v2-btn-default.--purple:hover,
 .container-customer-list.customer-list-dark .v2-btn-default.--purple:hover {
   background: rgba(167, 139, 250, 0.15);
   border-color: transparent;

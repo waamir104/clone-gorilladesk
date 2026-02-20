@@ -267,7 +267,7 @@ export const CustomersPage = () => {
   return (
     <div
       id="wrapper-customer-list"
-      className={`container-wrap container-table custom-grid-sidebar container-customer-list customer-list-dark${!internalSidebarOpen ? " customer-list-internal-sidebar-hidden" : ""}`}
+      className={`container-wrap container-table custom-grid-sidebar container-customer-list${!internalSidebarOpen ? " customer-list-internal-sidebar-hidden" : ""}`}
     >
       {/* Left sidebar - customer list filters */}
       <div id="wrapper-side-menu-customer-list" className="sidebar-menu sidebar-left scrolls" aria-hidden={!internalSidebarOpen}>
