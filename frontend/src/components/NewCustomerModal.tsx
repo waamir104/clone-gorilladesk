@@ -31,6 +31,7 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
   const [status, setStatus] = useState<string>("Active Customer");
   const [phoneType, setPhoneType] = useState<string>("Mobile");
   const [source, setSource] = useState<string>("");
+  const [showFastForm, setShowFastForm] = useState<boolean>(false);
   const [openDropdownKey, setOpenDropdownKey] = useState<DropdownKey | null>(null);
   const statusDropdownRef = useRef<HTMLDivElement>(null);
   const mobileDropdownRef = useRef<HTMLDivElement>(null);
@@ -129,7 +130,8 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
               </p>
               <div className="form-default">
                 <form className="box-has-rows" onSubmit={(e) => e.preventDefault()}>
-                  {/* Status */}
+                  {/* Status - hidden in fast form */}
+                  {!showFastForm && (
                   <div className="rows">
                     <div className="rows__label flexcenter">
                       <p className="txt-ellipsis txt-label" title="Status">Status</p>
@@ -179,6 +181,7 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       </div>
                     </div>
                   </div>
+                  )}
 
                   {/* Account # */}
                   <div className="rows">
@@ -219,7 +222,8 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                     </div>
                   </div>
 
-                  {/* Title */}
+                  {/* Title - hidden in fast form */}
+                  {!showFastForm && (
                   <div className="rows">
                     <div className="rows__label flexcenter">
                       <p className="txt-ellipsis txt-label" title="Title">Title</p>
@@ -228,8 +232,9 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       <input className="field-input" placeholder="Title" name="title" defaultValue="" />
                     </div>
                   </div>
+                  )}
 
-                  {/* Company */}
+                  {!showFastForm && (
                   <div className="rows">
                     <div className="rows__label flexcenter">
                       <p className="txt-ellipsis txt-label" title="Company">Company</p>
@@ -238,6 +243,7 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       <input className="field-input" placeholder="Company" name="company" defaultValue="" />
                     </div>
                   </div>
+                  )}
 
                   {/* Email */}
                   <div className="rows">
@@ -299,7 +305,8 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                     </div>
                   </div>
 
-                  {/* Source */}
+                  {/* Source - hidden in fast form */}
+                  {!showFastForm && (
                   <div className="rows">
                     <div className="rows__label flexcenter">
                       <p className="txt-ellipsis txt-label" title="Source">Source</p>
@@ -343,8 +350,10 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       </div>
                     </div>
                   </div>
+                  )}
 
-                  {/* Tags */}
+                  {/* Tags - hidden in fast form */}
+                  {!showFastForm && (
                   <div className="rows">
                     <div className="rows__label flexcenter">
                       <p className="txt-ellipsis txt-label" title="Tags">Tags</p>
@@ -370,8 +379,10 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       </div>
                     </div>
                   </div>
+                  )}
 
-                  {/* Additional Contacts */}
+                  {/* Additional Contacts - hidden in fast form */}
+                  {!showFastForm && (
                   <div className="rows">
                     <div className="rows__label flexcenter">
                       <p className="txt-ellipsis txt-label" title="Additional Contacts">Additional Contacts</p>
@@ -383,6 +394,7 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       </button>
                     </div>
                   </div>
+                  )}
 
                   {/* Address Name */}
                   <div className="rows">
@@ -424,7 +436,8 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                     </div>
                   </div>
 
-                  {/* Billing Email */}
+                  {/* Billing Email - hidden in fast form */}
+                  {!showFastForm && (
                   <div className="rows">
                     <div className="rows__label flexcenter">
                       <p className="txt-ellipsis txt-label" title="Billing Email">Billing Email</p>
@@ -454,8 +467,10 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       </button>
                     </div>
                   </div>
+                  )}
 
-                  {/* Work Order Email */}
+                  {/* Work Order Email - hidden in fast form */}
+                  {!showFastForm && (
                   <div className="rows">
                     <div className="rows__label flexcenter">
                       <p className="txt-ellipsis txt-label" title="Work Order Email">Work Order Email</p>
@@ -485,8 +500,10 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       </button>
                     </div>
                   </div>
+                  )}
 
-                  {/* Location Note */}
+                  {/* Location Note - hidden in fast form */}
+                  {!showFastForm && (
                   <div className="rows">
                     <div className="rows__label flexcenter">
                       <p className="txt-ellipsis txt-label" title="Location Note">Location Note</p>
@@ -495,8 +512,10 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       <textarea name="location_note" className="field-textarea --no-resize --h-120" cols={30} rows={10} defaultValue="" />
                     </div>
                   </div>
+                  )}
 
-                  {/* Units */}
+                  {/* Units - hidden in fast form */}
+                  {!showFastForm && (
                   <div className="rows">
                     <div className="rows__label flexcenter">
                       <p className="txt-ellipsis txt-label" title="Units">Units</p>
@@ -509,8 +528,10 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       </button>
                     </div>
                   </div>
+                  )}
 
-                  {/* Location Tags */}
+                  {/* Location Tags - hidden in fast form */}
+                  {!showFastForm && (
                   <div className="rows">
                     <div className="rows__label flexcenter">
                       <p className="txt-ellipsis txt-label" title="Location Tags">Location Tags</p>
@@ -536,8 +557,10 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       </div>
                     </div>
                   </div>
+                  )}
 
-                  {/* Messaging */}
+                  {/* Messaging - hidden in fast form */}
+                  {!showFastForm && (
                   <div className="rows">
                     <div className="rows__label flexcenter">
                       <p className="txt-ellipsis txt-label" title="Messaging">Messaging</p>
@@ -549,6 +572,7 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       </button>
                     </div>
                   </div>
+                  )}
                 </form>
               </div>
             </div>
@@ -562,7 +586,13 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                   </svg>
                 </div>
                 <div className="switch large" title="Fast form">
-                  <input id="switch-customer" className="toggle toggle-round label-enabled" type="checkbox" />
+                  <input
+                    id="switch-customer"
+                    className="toggle toggle-round label-enabled"
+                    type="checkbox"
+                    checked={showFastForm}
+                    onChange={() => setShowFastForm((prev) => !prev)}
+                  />
                   <label htmlFor="switch-customer" />
                   <span className="switch__label cursor-pointer ml-2 mr-0">Fast form</span>
                 </div>
