@@ -2,11 +2,15 @@ import { Fragment } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { SETTINGS_GROUPS } from "./settingsConfig";
 
-export const SettingsSidebar = () => {
+type SettingsSidebarProps = {
+  ariaHidden?: boolean;
+};
+
+export const SettingsSidebar = ({ ariaHidden }: SettingsSidebarProps) => {
   const { pathname } = useLocation();
 
   return (
-    <div className="sidebar-menu sidebar-pages scrolls pb-4">
+    <div className="sidebar-menu sidebar-pages scrolls pb-4" aria-hidden={ariaHidden}>
       <ul>
         {SETTINGS_GROUPS.map((group) => (
           <Fragment key={group.title}>

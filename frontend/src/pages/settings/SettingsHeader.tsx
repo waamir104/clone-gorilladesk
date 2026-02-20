@@ -2,25 +2,16 @@ import { useRef, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getSettingsItemByPath, SETTINGS_GROUPS } from "./settingsConfig";
 
-const BackIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M10.2929 5.29289C10.6834 4.90237 11.3166 4.90237 11.7071 5.29289C12.0976 5.68342 12.0976 6.31658 11.7071 6.70711L6.41421 12L11.7071 17.2929C12.0976 17.6834 12.0976 18.3166 11.7071 18.7071C11.3166 19.0976 10.6834 19.0976 10.2929 18.7071L4.29289 12.7071C3.90237 12.3166 3.90237 11.6834 4.29289 11.2929L10.2929 5.29289ZM19 16C19.5523 16 20 16.4477 20 17C20 17.5523 19.5523 18 19 18H15C14.4477 18 14 17.5523 14 17C14 16.4477 14.4477 16 15 16H19ZM19 11C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H10C9.44772 13 9 12.5523 9 12C9 11.4477 9.44772 11 10 11H19ZM19 6C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8H15C14.4477 8 14 7.55228 14 7C14 6.44772 14.4477 6 15 6H19Z"
-      fill="var(--color-icon)"
-    />
+/* Same as Header: default = hamburger, active = back arrow + menu lines */
+const SidebarIconDefault = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+    <path fillRule="evenodd" clipRule="evenodd" d="M15 16C15.5523 16 16 16.4477 16 17C16 17.5523 15.5523 18 15 18H5C4.44772 18 4 17.5523 4 17C4 16.4477 4.44772 16 5 16H15ZM19 11C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11H19ZM19 6C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8H5C4.44772 8 4 7.55228 4 7C4 6.44772 4.44772 6 5 6H19Z" fill="var(--color-icon)" />
   </svg>
 );
-
-const ArrowDownIcon = () => (
-  <svg width="8" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M1.39378 0H8.60622C9.3014 0 9.86495 0.612378 9.86495 1.36778C9.86495 1.68776 9.76171 1.99761 9.5732 2.24342L5.96698 6.94579C5.52194 7.52611 4.72823 7.60452 4.19417 7.12092C4.13569 7.06796 4.08175 7.00934 4.03301 6.94579L0.426789 2.24342C-0.0182539 1.6631 0.0539014 0.800623 0.587953 0.317024C0.814167 0.112181 1.09931 0 1.39378 0Z"
-      fill="var(--color-icon)"
-    />
+/* Icon when menu is visible (back arrow + menu lines) */
+const SidebarIconActive = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M10.2929 5.29289C10.6834 4.90237 11.3166 4.90237 11.7071 5.29289C12.0976 5.68342 12.0976 6.31658 11.7071 6.70711L6.41421 12L11.7071 17.2929C12.0976 17.6834 12.0976 18.3166 11.7071 18.7071C11.3166 19.0976 10.6834 19.0976 10.2929 18.7071L4.29289 12.7071C3.90237 12.3166 3.90237 11.6834 4.29289 11.2929L10.2929 5.29289ZM19 16C19.5523 16 20 16.4477 20 17C20 17.5523 19.5523 18 19 18H15C14.4477 18 14 17.5523 14 17C14 16.4477 14.4477 16 15 16H19ZM19 11C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H10C9.44772 13 9 12.5523 9 12C9 11.4477 9.44772 11 10 11H19ZM19 6C19.5523 6 20 6.44772 20 7C20 7.55228 19.5523 8 19 8H15C14.4477 8 14 7.55228 14 7C14 6.44772 14.4477 6 15 6H19Z" fill="var(--color-icon)" />
   </svg>
 );
 
@@ -47,7 +38,12 @@ const TutorialsIcon = () => (
   </svg>
 );
 
-export const SettingsHeader = () => {
+type SettingsHeaderProps = {
+  sidebarOpen?: boolean;
+  onToggleSidebar?: () => void;
+};
+
+export const SettingsHeader = ({ sidebarOpen = true, onToggleSidebar }: SettingsHeaderProps) => {
   const { pathname } = useLocation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -68,13 +64,32 @@ export const SettingsHeader = () => {
   return (
     <div className="header --main">
       <div className="header__left flex-1">
-        <Link
-          to="/app"
-          className="header-items btn-bg-grey v2-btn-default --icon-lg --transparent"
-          aria-label="Back"
-        >
-          <BackIcon />
-        </Link>
+        {onToggleSidebar ? (
+          <button
+            type="button"
+            className={`header-items btn-bg-grey v2-btn-default --icon-lg --transparent items-collapse${sidebarOpen ? " active" : ""}`}
+            aria-label={sidebarOpen ? "Ocultar menú" : "Mostrar menú"}
+            title={sidebarOpen ? "Ocultar menú" : "Mostrar menú"}
+            onClick={onToggleSidebar}
+          >
+            <div className="default">
+              <SidebarIconDefault />
+            </div>
+            <div className="active">
+              <SidebarIconActive />
+            </div>
+          </button>
+        ) : (
+          <Link
+            to="/app"
+            className="header-items btn-bg-grey v2-btn-default --icon-lg --transparent"
+            aria-label="Back"
+          >
+            <div className="default">
+              <SidebarIconDefault />
+            </div>
+          </Link>
+        )}
         <div
           ref={dropdownRef}
           className={`header-items v2-dropdown list-menu${dropdownOpen ? " is-open" : ""}`}
@@ -88,7 +103,7 @@ export const SettingsHeader = () => {
           >
             <h2 className="txt-ellipsis fs-14">{currentLabel}</h2>
             <div className="arrow">
-              <ArrowDownIcon />
+              <span className="material-symbols-outlined">keyboard_arrow_down</span>
             </div>
           </button>
           <div className="v2-dropdown__menu scrolls" id="dropdown-report-menu">

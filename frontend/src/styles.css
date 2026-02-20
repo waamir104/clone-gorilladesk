@@ -3871,6 +3871,10 @@ section p {
   min-width: 0;
 }
 
+.container-setting.settings-sidebar-hidden .settings-body .sidebar-menu.sidebar-pages {
+  display: none;
+}
+
 .container-setting .sidebar-menu.sidebar-pages {
   width: 240px;
   min-width: 240px;
@@ -3959,21 +3963,70 @@ section p {
 .container-setting .header.--main .header__left {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 4px;
   min-width: 0;
+}
+
+.container-setting .header.--main .header-items,
+.container-setting .header.--main .v2-dropdown .dropbtn,
+.container-setting .header.--main .v2-btn-default {
+  height: 32px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75rem;
+}
+
+.container-setting .header.--main .header-items.--icon-lg {
+  width: 32px;
+  padding: 0;
+}
+
+.container-setting .header.--main .header-items.items-collapse {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-setting .header.--main .header-items.items-collapse .default,
+.container-setting .header.--main .header-items.items-collapse .active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+}
+
+.container-setting .header.--main .header-items.items-collapse .active {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.container-setting .header.--main .header-items.items-collapse.active .default {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.container-setting .header.--main .header-items.items-collapse.active .active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.container-setting .header.--main .header-items.items-collapse svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 .container-setting .header.--main .btn-bg-grey,
 .container-setting .header.--main .has-bg-grey {
   background: #f3f4f6;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 0.5rem;
+  border-radius: 4px;
   color: var(--color-icon);
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   text-decoration: none;
 }
 
@@ -3987,13 +4040,11 @@ section p {
 }
 
 .container-setting .header.--main .v2-dropdown .dropbtn {
-  display: flex;
-  align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0 8px 0 12px;
   background: #f3f4f6;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 0.875rem;
   font-weight: 400;
   cursor: pointer;
@@ -4008,6 +4059,11 @@ section p {
 .container-setting .header.--main .v2-dropdown .arrow {
   display: flex;
   align-items: center;
+}
+
+.container-setting .header.--main .v2-dropdown .arrow .material-symbols-outlined {
+  font-size: 20px;
+  color: var(--color-icon);
 }
 
 .container-setting .header.--main .v2-dropdown__menu {
@@ -4082,10 +4138,7 @@ section p {
 }
 
 .container-setting .btn-tutorials .v2-btn-default.has-icon {
-  display: inline-flex;
-  align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
   background: #f3f4f6;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
@@ -4100,6 +4153,9 @@ section p {
   min-width: 0;
   overflow: auto;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .container-setting .contents-pages.wrapper-box-edit {
