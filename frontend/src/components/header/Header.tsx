@@ -264,7 +264,7 @@ export const Header = ({ isSidebarOpen = true, onToggleSidebar }: HeaderProps) =
           <div className="v2-dropdown wrap-nav nav-user">
             <div className="dropbtn v2-btn-default nav">
               <div className="avatar relative flexcenter">
-                <img loading="lazy" src="https://d10lkxv225q7z2.cloudfront.net/avatars%2Fstatic%2Favatar_1.jpg" width={32} height={32} alt="Avatar" className="avt-img --lg" />
+                <img loading="lazy" src="/login/logo icon.png" alt="Ivy Green Desk" width={32} height={32} className="avt-img --lg" />
               </div>
               <span className="nav__label">IVY</span>
               <span className="arrow"><IconArrowDown /></span>

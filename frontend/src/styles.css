@@ -11,6 +11,7 @@
   --primary-btn-hover-bg: rgb(20, 140, 72);
   --selected-bg: #554b63;
   --selected-color: #fff;
+  --black-darker6: rgba(0, 0, 0, 0.45);
 }
 
 html,
@@ -1762,6 +1763,71 @@ section p {
 .container-customer-list .header.--filter .flex-betweenitems .header-items.v2-dropdown .dropbtn.v2-btn-default.has-icon:hover .arrow svg path {
   color: #e5e5e5;
   stroke: #e5e5e5;
+}
+
+/* Customer list dropdown menus (Active, Mark as, Global Override) – single option "placeh" */
+.container-customer-list .header.--filter .v2-dropdown {
+  position: relative;
+}
+
+.container-customer-list .header.--filter .v2-dropdown__menu.v2-dropdown__menu--customer-list {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  width: max-content;
+  min-width: max-content;
+  background: #1c1c1c;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  padding: 4px 0;
+  list-style: none;
+  opacity: 1;
+  box-shadow: 0 6px 8px -6px var(--black-darker6), 0 5px 12px 0 var(--black-darker6), 0 4px 10px 0 var(--black-darker6), 0 3px 8px 0 var(--black-darker6), 0 2px 6px 0 var(--black-darker6), 0 0 5px 0 var(--black-darker6);
+}
+
+.container-customer-list .header.--filter .v2-dropdown:hover .v2-dropdown__menu--customer-list,
+.container-customer-list .header.--filter .v2-dropdown:focus-within .v2-dropdown__menu--customer-list {
+  display: block;
+}
+
+.container-customer-list .header.--filter .v2-dropdown__menu--customer-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.container-customer-list .header.--filter .v2-dropdown__menu--customer-list .items {
+  padding: 4px 8px;
+  font-size: 14px;
+  text-align: left;
+  border-radius: 4px;
+  color: #cccccc;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.container-customer-list .header.--filter .v2-dropdown__menu--customer-list .items:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.container-customer-list .header.--filter .v2-dropdown__menu--customer-list .items.is-selected {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.container-customer-list .header.--filter .v2-dropdown__menu--customer-list .items.has-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.container-customer-list .header.--filter .v2-dropdown__menu--customer-list .items.has-icon .material-symbols-outlined {
+  font-size: 20px;
+  color: inherit;
+  flex-shrink: 0;
 }
 
 /* Merge Accounts – mismos estilos que Active / Mark as / Global Override */
