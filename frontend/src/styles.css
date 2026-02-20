@@ -1615,6 +1615,7 @@ section p {
   align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
+  background-color: rgb(10, 12, 13);
 }
 
 .container-customer-list .header.--filter .header__left {
@@ -1633,6 +1634,12 @@ section p {
 .container-customer-list .header.--filter .v2-btn-default svg path {
   fill: var(--color-icon);
   stroke: var(--color-icon);
+}
+
+/* Map & Sub Locations – mismo borde y radius que search-ip, Import y Active */
+.container-customer-list .header.--filter .v2-btn-default.btn-mapbox {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
 }
 
 /* Active status dropdown – dark pill style */
@@ -1873,6 +1880,10 @@ section p {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.container-customer-list .wrap-tables .flex-betweenitems.flex-wrap.gap-8.w-100 {
+  background-color: rgb(10, 12, 13);
 }
 
 .container-customer-list .gap-4 { gap: 0.5rem; }
@@ -2292,6 +2303,14 @@ section p {
 .container-customer-list.customer-list-dark .tables-list .rows {
   border-bottom-color: var(--cl-dark-border);
   color: var(--cl-text);
+}
+
+/* Filas alternas: impares rgb(14, 17, 18), pares rgb(10, 12, 13) */
+.container-customer-list.customer-list-dark .tables-list .rows:nth-child(odd) {
+  background: rgb(14, 17, 18);
+}
+.container-customer-list.customer-list-dark .tables-list .rows:nth-child(even) {
+  background: rgb(10, 12, 13);
 }
 
 .container-customer-list.customer-list-dark .tables-list .rows:hover {
