@@ -14,6 +14,8 @@
   --black-darker6: rgba(0, 0, 0, 0.45);
 }
 
+/* Light theme: New Customer Modal uses the block "Light theme – New Customer Modal" below (same as new_customer_modal.css). */
+
 html,
 body {
   overflow-x: hidden;
@@ -4265,7 +4267,7 @@ section p {
 
 .modal-addcustomer .required-label {
   margin: 0 0 1rem;
-  font-size: 14px;
+  font-size: 0.8125rem;
   color: var(--black-darker6, #6b7280);
 }
 
@@ -4339,7 +4341,7 @@ section p {
   z-index: 2;
   max-width: 220px;
   padding: 0.5rem 0.75rem;
-  font-size: 14px;
+  font-size: 0.75rem;
   font-weight: 400;
   background: #374151;
   color: #fff;
@@ -4636,7 +4638,7 @@ section p {
 }
 
 .modal-addcustomer .switch__label {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--color-text, #1f2937);
 }
 
@@ -4800,4 +4802,112 @@ section p {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* ========== Dark theme – New Customer Modal (modal-addcustomer) ========== */
+.theme-dark .modal.container-modal.modal-addcustomer,
+.theme-dark .modal-addcustomer .modal__container.--preview-r {
+  background: rgb(10, 12, 13);
+}
+
+.theme-dark .modal-addcustomer .header-modal {
+  background: rgb(10, 12, 13);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.theme-dark .modal-addcustomer .header-modal__label {
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .modal-addcustomer .header-modal .v2-btn-default.--transparent:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.theme-dark .modal-addcustomer .body-modal {
+  background: rgb(10, 12, 13);
+}
+
+.theme-dark .modal-addcustomer .required-label {
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .modal-addcustomer .rows__label,
+.theme-dark .modal-addcustomer .txt-label {
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .modal-addcustomer .field-input {
+  background: rgb(10, 12, 13);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .modal-addcustomer .field-input::placeholder {
+  color: rgba(176, 168, 181, 0.6);
+}
+
+.theme-dark .modal-addcustomer .field-input:focus {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+}
+
+.theme-dark .modal-addcustomer .field-textarea {
+  background: rgb(10, 12, 13);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .modal-addcustomer .v2-dropdown .dropbtn.items,
+.theme-dark .modal-addcustomer .body-modal .dropbtn.items {
+  background: rgb(10, 12, 13);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .modal-addcustomer .v2-dropdown .dropbtn .arrow .material-symbols-outlined,
+.theme-dark .modal-addcustomer .v2-dropdown .dropbtn .txt-ellipsis,
+.theme-dark .modal-addcustomer .v2-dropdown .dropbtn .tag-label__ellipsis {
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .modal-addcustomer .v2-dropdown .v2-dropdown__menu {
+  background: rgb(10, 12, 13);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.theme-dark .modal-addcustomer .v2-dropdown__menu .items {
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .modal-addcustomer .v2-dropdown__menu .items:hover,
+.theme-dark .modal-addcustomer .v2-dropdown__menu .items.is-selected {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .modal-addcustomer .select-input-tag {
+  background: transparent;
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .modal-addcustomer .select-input-tag::placeholder {
+  color: rgba(176, 168, 181, 0.6);
+}
+
+.theme-dark .modal-addcustomer .dropbtn.items.group-tags {
+  background: rgb(10, 12, 13);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.theme-dark .modal-addcustomer .switch__label {
+  color: rgb(176, 168, 181);
+}
+
+.theme-dark .modal-addcustomer .switch .toggle-round:checked + label {
+  background: rgb(142, 72, 247);
+}
+
+.theme-dark .modal-addcustomer .footer-modal {
+  background: rgb(10, 12, 13);
+  border-top-color: rgba(255, 255, 255, 0.12);
 }

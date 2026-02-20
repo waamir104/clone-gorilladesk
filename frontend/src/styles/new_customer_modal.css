@@ -349,7 +349,7 @@
 }
 
 .modal-addcustomer .switch .toggle-round:checked + label {
-  background: var(--primary-btn-bg, #18ad59);
+  background: rgb(142, 72, 247);
 }
 
 .modal-addcustomer .switch .toggle-round + label::after {
