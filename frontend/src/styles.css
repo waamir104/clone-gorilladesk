@@ -183,7 +183,6 @@ section p {
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-  padding: 1.5rem 2rem;
   background: #f4f5fb;
   display: flex;
   flex-direction: column;
@@ -428,7 +427,7 @@ section p {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 72px;
+  width: 64px;
   height: 100%;
   min-height: 64px;
   border: none;
@@ -3852,10 +3851,24 @@ section p {
 /* ========== Settings page ========== */
 .container-wrap.container-setting.custom-grid-sidebar {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
   min-height: 0;
   flex: 1;
   overflow: hidden;
+}
+
+.container-setting .settings-header-full {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.container-setting .settings-body {
+  display: flex;
+  flex-direction: row;
+  min-height: 0;
+  overflow: hidden;
+  min-width: 0;
 }
 
 .container-setting .sidebar-menu.sidebar-pages {
@@ -3865,6 +3878,7 @@ section p {
   border-right: 1px solid #e5e7eb;
   overflow-y: auto;
   overflow-x: hidden;
+  opacity: 0.8;
   list-style: none;
   margin: 0;
   padding: 0.5rem 0 1rem;
@@ -3925,6 +3939,10 @@ section p {
   flex-direction: column;
   min-height: 0;
   overflow: hidden;
+}
+
+.container-setting .settings-header-full .header.--main {
+  width: 100%;
 }
 
 .container-setting .header.--main {
@@ -4079,6 +4097,7 @@ section p {
 .container-setting .wrapper-columns {
   flex: 1;
   min-height: 0;
+  min-width: 0;
   overflow: auto;
   padding: 1rem;
 }
