@@ -1973,6 +1973,25 @@ section p {
   background: #f9fafb;
 }
 
+.container-customer-list .rows.rows--empty {
+  height: auto;
+  min-height: 80px;
+  align-items: center;
+}
+
+.container-customer-list .rows.rows--empty:hover {
+  background: transparent;
+}
+
+.container-customer-list .rows--empty .col.col--span-all.customer-list-empty-msg {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #aea79c;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
 .container-customer-list .rows .col {
   min-width: 0;
 }
@@ -2593,6 +2612,14 @@ section p {
 
 .container-customer-list.customer-list-dark .tables-list .rows:hover {
   background: rgba(255, 255, 255, 0.04);
+}
+
+.container-customer-list.customer-list-dark .rows--empty .col.customer-list-empty-msg {
+  color: #aea79c;
+}
+
+.container-customer-list.customer-list-dark .rows.rows--empty:hover {
+  background: transparent;
 }
 
 .container-customer-list.customer-list-dark .rows .col a,

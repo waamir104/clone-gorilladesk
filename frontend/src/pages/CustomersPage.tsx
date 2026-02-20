@@ -121,13 +121,23 @@ export const CustomersPage = () => {
   };
 
   const filteredCustomers = useMemo(() => {
-    if (alphabetFilter === "A-Z") return sortedCustomers;
-    const letter = alphabetFilter.toUpperCase();
-    return sortedCustomers.filter((customer) => {
-      const firstChar = (customer.name || "").trim().toUpperCase().charAt(0);
-      return firstChar === letter;
+    let list = sortedCustomers;
+    if (alphabetFilter !== "A-Z") {
+      const letter = alphabetFilter.toUpperCase();
+      list = list.filter((customer) => {
+        const firstChar = (customer.name || "").trim().toUpperCase().charAt(0);
+        return firstChar === letter;
+      });
+    }
+    const term = (searchTerm || "").trim().toLowerCase();
+    if (!term) return list;
+    return list.filter((customer) => {
+      const name = (customer.name || "").toLowerCase();
+      const email = (customer.email || "").toLowerCase();
+      const company = (customer.company || "").toLowerCase();
+      return name.includes(term) || email.includes(term) || company.includes(term);
     });
-  }, [sortedCustomers, alphabetFilter]);
+  }, [sortedCustomers, alphabetFilter, searchTerm]);
 
   const toggleRow = (id: number) => {
     setSelectedIds((prev) => {
@@ -626,45 +636,53 @@ export const CustomersPage = () => {
 
                   {/* Table body */}
                   <div className="tables-list">
-                    {filteredCustomers.map((customer) => (
-                      <div id={String(customer.id)} key={customer.id} className="rows">
-                        <div className="col --checkbox">
-                          <div className="check-items">
-                            <input
-                              id={`-${customer.id}-check-box`}
-                              type="checkbox"
-                              checked={selectedIds.has(customer.id)}
-                              onChange={() => toggleRow(customer.id)}
-                              aria-label={`Select ${customer.name}`}
-                            />
-                            <div className="item-checkbox">
-                              <label htmlFor={`-${customer.id}-check-box`} />
-                            </div>
-                          </div>
-                        </div>
-                        <Link to={`/app/customers/${customer.id}`} className="col col-lg">
-                          <p className="name" title={customer.name}>{customer.name}</p>
-                        </Link>
-                        <div className="col col-lg">
-                          <div className="txt-ellipsis" title={customer.email}>{customer.email || ""}</div>
-                        </div>
-                        <div className="col">
-                          <div className="txt-ellipsis" title={customer.company}>{customer.company || ""}</div>
-                        </div>
-                        <div className={`col ${!customer.balance ? "--empty" : ""}`}>
-                          <p className="col-label" title={customer.balance}>{customer.balance}</p>
-                        </div>
-                        <div className="col col-xs flex-none">
-                          <Link
-                            to={`/app/customers/account/${customer.id}`}
-                            title="Edit"
-                            className="v2-btn-default --purple px-1"
-                          >
-                            Edit
-                          </Link>
+                    {filteredCustomers.length === 0 ? (
+                      <div className="rows rows--empty">
+                        <div className="col col--span-all customer-list-empty-msg">
+                          No hay resultados
                         </div>
                       </div>
-                    ))}
+                    ) : (
+                      filteredCustomers.map((customer) => (
+                        <div id={String(customer.id)} key={customer.id} className="rows">
+                          <div className="col --checkbox">
+                            <div className="check-items">
+                              <input
+                                id={`-${customer.id}-check-box`}
+                                type="checkbox"
+                                checked={selectedIds.has(customer.id)}
+                                onChange={() => toggleRow(customer.id)}
+                                aria-label={`Select ${customer.name}`}
+                              />
+                              <div className="item-checkbox">
+                                <label htmlFor={`-${customer.id}-check-box`} />
+                              </div>
+                            </div>
+                          </div>
+                          <Link to={`/app/customers/${customer.id}`} className="col col-lg">
+                            <p className="name" title={customer.name}>{customer.name}</p>
+                          </Link>
+                          <div className="col col-lg">
+                            <div className="txt-ellipsis" title={customer.email}>{customer.email || ""}</div>
+                          </div>
+                          <div className="col">
+                            <div className="txt-ellipsis" title={customer.company}>{customer.company || ""}</div>
+                          </div>
+                          <div className={`col ${!customer.balance ? "--empty" : ""}`}>
+                            <p className="col-label" title={customer.balance}>{customer.balance}</p>
+                          </div>
+                          <div className="col col-xs flex-none">
+                            <Link
+                              to={`/app/customers/account/${customer.id}`}
+                              title="Edit"
+                              className="v2-btn-default --purple px-1"
+                            >
+                              Edit
+                            </Link>
+                          </div>
+                        </div>
+                      ))
+                    )}
                   </div>
                 </div>
               </div>
