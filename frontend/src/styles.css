@@ -2215,7 +2215,8 @@ section p {
   text-decoration: none;
 }
 
-/* ========== Customer list – Dark theme (always, like reference) ========== */
+/* ========== Customer list – Dark theme (customer-list-dark + theme-dark) ========== */
+.theme-dark .container-customer-list,
 .container-customer-list.customer-list-dark {
   --color-icon: #aea79c;
   --cl-dark-bg: rgb(19, 22, 23);
@@ -2228,93 +2229,115 @@ section p {
   --cl-purple: #a78bfa;
 }
 
+.theme-dark .container-customer-list .sidebar-menu.sidebar-left,
 .container-customer-list.customer-list-dark .sidebar-menu.sidebar-left {
   background: var(--cl-dark-bg);
   border-right-color: var(--cl-dark-border);
 }
 
+.theme-dark .container-customer-list .sidebar-menu.sidebar-left .sidebar-items,
 .container-customer-list.customer-list-dark .sidebar-menu.sidebar-left .sidebar-items {
   color: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .sidebar-menu.sidebar-left .sidebar-items:hover:not(.is-disable),
 .container-customer-list.customer-list-dark .sidebar-menu.sidebar-left .sidebar-items:hover:not(.is-disable) {
   background: rgba(255, 255, 255, 0.06);
 }
 
+.theme-dark .container-customer-list .sidebar-menu.sidebar-left .sidebar-items.active,
 .container-customer-list.customer-list-dark .sidebar-menu.sidebar-left .sidebar-items.active {
   background: rgba(255, 255, 255, 0.08);
   color: #fff;
 }
 
+.theme-dark .container-customer-list .sidebar-menu.sidebar-left .sidebar-items.active .count,
 .container-customer-list.customer-list-dark .sidebar-menu.sidebar-left .sidebar-items.active .count {
   color: #fff;
 }
 
+.theme-dark .container-customer-list .sidebar-menu.sidebar-left .sidebar-items.--lead .count.count--lead,
 .container-customer-list.customer-list-dark .sidebar-menu.sidebar-left .sidebar-items.--lead .count.count--lead {
   color: var(--cl-green);
 }
 
+.theme-dark .container-customer-list .sidebar-menu.sidebar-left .sidebar-items.--red,
 .container-customer-list.customer-list-dark .sidebar-menu.sidebar-left .sidebar-items.--red {
   color: #f87171;
 }
 
+.theme-dark .container-customer-list .sidebar-menu.sidebar-left .sidebar-items.is-disable,
 .container-customer-list.customer-list-dark .sidebar-menu.sidebar-left .sidebar-items.is-disable {
   color: var(--cl-text-muted);
   opacity: 0.85;
 }
 
+.theme-dark .container-customer-list .sidebar-menu.sidebar-left .title .tooltip svg rect,
 .container-customer-list.customer-list-dark .sidebar-menu.sidebar-left .title .tooltip svg rect {
   fill: var(--cl-blue);
 }
 
+.theme-dark .container-customer-list .sidebar-menu.sidebar-left .is-divider.--horizontal,
 .container-customer-list.customer-list-dark .sidebar-menu.sidebar-left .is-divider.--horizontal {
   background: var(--cl-dark-border);
 }
 
+.theme-dark .container-customer-list .customer-list-main,
 .container-customer-list.customer-list-dark .customer-list-main {
   background: var(--cl-dark-bg);
 }
 
+.theme-dark .container-customer-list .contents-pages.customer-list,
 .container-customer-list.customer-list-dark .contents-pages.customer-list {
   color: var(--cl-text);
 }
 
 /* Header */
+.theme-dark .container-customer-list .customer-list-header .search-form .search-ip,
 .container-customer-list.customer-list-dark .customer-list-header .search-form .search-ip {
   background: rgb(10, 12, 13);
   border-color: var(--cl-dark-border);
   color: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .customer-list-header .search-form .search-ip::placeholder,
 .container-customer-list.customer-list-dark .customer-list-header .search-form .search-ip::placeholder {
   color: var(--cl-text-muted);
 }
 
+.theme-dark .container-customer-list .customer-list-header .svg-search-absolute,
+.theme-dark .container-customer-list .customer-list-header .v2-btn-default.--icon-lg svg path,
 .container-customer-list.customer-list-dark .customer-list-header .svg-search-absolute,
 .container-customer-list.customer-list-dark .customer-list-header .v2-btn-default.--icon-lg svg path {
   color: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .customer-list-header .v2-btn-default,
 .container-customer-list.customer-list-dark .customer-list-header .v2-btn-default {
   background: rgb(10, 12, 13);
   border-color: var(--cl-dark-border);
   color: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .customer-list-header .v2-btn-default:hover,
 .container-customer-list.customer-list-dark .customer-list-header .v2-btn-default:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: var(--cl-dark-border);
 }
 
+.theme-dark .container-customer-list .customer-list-header .v2-btn-default svg path,
 .container-customer-list.customer-list-dark .customer-list-header .v2-btn-default svg path {
   fill: var(--cl-text);
 }
 
+.theme-dark .container-customer-list .customer-list-header .export p,
 .container-customer-list.customer-list-dark .customer-list-header .export p {
   color: var(--cl-text-muted);
 }
 
 /* Export (CSV, Excel) – mismo estilo que filtros Columns/Status/Tags */
+.theme-dark .container-customer-list .customer-list-header .export__option.--left,
+.theme-dark .container-customer-list .customer-list-header .export__option.--right,
 .container-customer-list.customer-list-dark .customer-list-header .export__option.--left,
 .container-customer-list.customer-list-dark .customer-list-header .export__option.--right {
   background: #131926;
@@ -2322,6 +2345,7 @@ section p {
   color: #2a84ff;
 }
 
+.theme-dark .container-customer-list .customer-list-header .export__option.--left,
 .container-customer-list.customer-list-dark .customer-list-header .export__option.--left {
   border-radius: 4px 0 0 4px;
 }
@@ -2331,22 +2355,26 @@ section p {
   border-left: none;
 }
 
+.theme-dark .container-customer-list .customer-list-header .export__option:hover,
 .container-customer-list.customer-list-dark .customer-list-header .export__option:hover {
   background: rgba(42, 132, 255, 0.12);
   border-color: rgba(70, 110, 150, 0.5);
   color: #2a84ff;
 }
 
+.theme-dark .container-customer-list .customer-list-header .is-divider,
 .container-customer-list.customer-list-dark .customer-list-header .is-divider {
   background: var(--cl-dark-border);
 }
 
+.theme-dark .container-customer-list .customer-list-header .v2-btn-main.--bg-green,
 .container-customer-list.customer-list-dark .customer-list-header .v2-btn-main.--bg-green {
   background: var(--cl-green);
   border-color: var(--cl-green);
   color: rgb(10, 12, 13);
 }
 
+.theme-dark .container-customer-list .customer-list-header .v2-btn-main.--bg-green:hover,
 .container-customer-list.customer-list-dark .customer-list-header .v2-btn-main.--bg-green:hover {
   background: #16a34a;
   border-color: #16a34a;
