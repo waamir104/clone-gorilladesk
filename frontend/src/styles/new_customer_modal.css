@@ -445,3 +445,24 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Footer Save buttons (Save + Save &) */
+.modal-addcustomer .footer-modal .flexcenter > button.v2-btn-main,
+.modal-addcustomer .footer-modal .dropdown-save .dropbtn.dropbtn-save {
+  background-color: rgb(142, 72, 247);
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 4px;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-addcustomer .footer-modal .flexcenter > button.v2-btn-main:hover,
+.modal-addcustomer .footer-modal .dropdown-save .dropbtn.dropbtn-save:hover {
+  background-color: rgb(122, 52, 227);
+}

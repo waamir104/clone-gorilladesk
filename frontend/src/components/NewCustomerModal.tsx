@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
+
+const STATUS_OPTIONS = ["New Lead", "Active Customer", "Inactive Customer"] as const;
 
 type NewCustomerModalProps = {
   isOpen: boolean;
@@ -26,6 +28,10 @@ const PlusIcon = () => (
 );
 
 export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onClose }) => {
+  const [status, setStatus] = useState<string>("Active Customer");
+  const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
+  const statusDropdownRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -39,6 +45,17 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
       document.body.style.overflow = "";
     };
   }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (!statusDropdownOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (statusDropdownRef.current && !statusDropdownRef.current.contains(e.target as Node)) {
+        setStatusDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [statusDropdownOpen]);
 
   if (!isOpen) return null;
 
@@ -94,12 +111,47 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                       <p className="txt-ellipsis txt-label" title="Status">Status</p>
                     </div>
                     <div className="rows__field">
-                      <div className="v2-dropdown">
-                        <div className="dropbtn items" tabIndex={0}>
-                          <div className="txt-ellipsis">Active Customer</div>
-                          <div className="arrow"><ArrowDownIcon /></div>
+                      <div
+                        ref={statusDropdownRef}
+                        className={`v2-dropdown${statusDropdownOpen ? " is-open" : ""}`}
+                      >
+                        <div
+                          className="dropbtn items"
+                          tabIndex={0}
+                          role="button"
+                          onClick={() => setStatusDropdownOpen((prev) => !prev)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              setStatusDropdownOpen((prev) => !prev);
+                            }
+                          }}
+                        >
+                          <div className="txt-ellipsis">{status}</div>
+                          <div className="arrow">
+                            <span className="material-symbols-outlined">
+                              {statusDropdownOpen ? "keyboard_arrow_up" : "keyboard_arrow_down"}
+                            </span>
+                          </div>
                         </div>
-                        <div className="v2-dropdown__menu scrolls" />
+                        <div className="v2-dropdown__menu scrolls">
+                          <ul>
+                            {STATUS_OPTIONS.map((option) => (
+                              <li
+                                key={option}
+                                className={`items${status === option ? " is-selected" : ""}`}
+                                role="option"
+                                aria-selected={status === option}
+                                onClick={() => {
+                                  setStatus(option);
+                                  setStatusDropdownOpen(false);
+                                }}
+                              >
+                                {option}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -402,11 +454,7 @@ export const NewCustomerModal: React.FC<NewCustomerModalProps> = ({ isOpen, onCl
                 <div className="dropdown-save v2-dropup">
                   <div className="dropbtn v2-btn-main dropbtn-save active --icon-r svg-more-white" tabIndex={0}>
                     Save &amp;
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="12" cy="12" r="1.5" fill="var(--color-icon)" />
-                      <circle cx="12" cy="6" r="1.5" fill="var(--color-icon)" />
-                      <circle cx="12" cy="18" r="1.5" fill="var(--color-icon)" />
-                    </svg>
+                    <span className="material-symbols-outlined">more_vert</span>
                   </div>
                   <div className="v2-dropdown__menu scrolls" />
                 </div>
