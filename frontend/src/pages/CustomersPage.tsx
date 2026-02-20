@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
+import * as XLSX from "xlsx-js-style";
 
 type SortColumn = "customer" | "email" | "company" | "balance";
 type SortDirection = "asc" | "desc";
@@ -163,6 +164,96 @@ export const CustomersPage = () => {
     }
   };
 
+  const escapeCsvCell = (value: string): string => {
+    const s = String(value ?? "").trim();
+    if (/[",\n\r]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
+    return s;
+  };
+
+  const exportToCsv = () => {
+    const headers = ["Customer", "Email", "Company", "Balance"];
+    const rows = filteredCustomers.map((c) => [
+      escapeCsvCell(c.name),
+      escapeCsvCell(c.email),
+      escapeCsvCell(c.company),
+      escapeCsvCell(c.balance),
+    ]);
+    const csv = [headers.join(","), ...rows.map((r) => r.join(","))].join("\r\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `customers-export-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportToExcel = () => {
+    const headers = ["Customer", "Email", "Company", "Balance"];
+    const data = [
+      headers,
+      ...filteredCustomers.map((c) => [
+        (c.name ?? "").trim(),
+        (c.email ?? "").trim(),
+        (c.company ?? "").trim(),
+        (c.balance ?? "").trim(),
+      ]),
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(data);
+
+    const thinBorder = {
+      top: { style: "thin", color: { rgb: "FF000000" } },
+      bottom: { style: "thin", color: { rgb: "FF000000" } },
+      left: { style: "thin", color: { rgb: "FF000000" } },
+      right: { style: "thin", color: { rgb: "FF000000" } },
+    };
+
+    const headerStyle = {
+      fill: { fgColor: { rgb: "FF404040" }, patternType: "solid" },
+      font: { bold: true, color: { rgb: "FFFFFFFF" }, sz: 11 },
+      border: thinBorder,
+      alignment: { vertical: "center", horizontal: "left" },
+    };
+
+    const rowCount = data.length;
+    const colCount = headers.length;
+
+    for (let c = 0; c < colCount; c++) {
+      const cellRef = XLSX.utils.encode_cell({ r: 0, c });
+      if (!ws[cellRef]) continue;
+      ws[cellRef].s = headerStyle;
+    }
+
+    for (let r = 1; r < rowCount; r++) {
+      const isAlternate = (r - 1) % 2 === 1;
+      const fillRgb = isAlternate ? "FFF2F2F2" : "FFFFFFFF";
+      for (let c = 0; c < colCount; c++) {
+        const cellRef = XLSX.utils.encode_cell({ r, c });
+        if (!ws[cellRef]) continue;
+        const isBalance = c === 3;
+        ws[cellRef].s = {
+          fill: { fgColor: { rgb: fillRgb }, patternType: "solid" },
+          border: thinBorder,
+          alignment: {
+            vertical: "center",
+            horizontal: isBalance ? "right" : "left",
+          },
+        };
+      }
+    }
+
+    ws["!cols"] = [
+      { wch: 28 },
+      { wch: 32 },
+      { wch: 22 },
+      { wch: 14 },
+    ];
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Customers");
+    XLSX.writeFile(wb, `customers-export-${new Date().toISOString().slice(0, 10)}.xlsx`);
+  };
+
   return (
     <div
       id="wrapper-customer-list"
@@ -247,8 +338,12 @@ export const CustomersPage = () => {
               <div className="export flexcenter gap-4 fw-500 fs-13">
                 <p>Export to:</p>
                 <div className="flexcenter">
-                  <div className="export__option --blue --left"><span>CSV</span></div>
-                  <div className="export__option --blue --right"><span>Excel</span></div>
+                  <button type="button" className="export__option --blue --left" onClick={exportToCsv}>
+                    <span>CSV</span>
+                  </button>
+                  <button type="button" className="export__option --blue --right" onClick={exportToExcel}>
+                    <span>Excel</span>
+                  </button>
                 </div>
               </div>
               <span className="is-divider mx-1" />

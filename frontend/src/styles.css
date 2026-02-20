@@ -1523,6 +1523,8 @@ section p {
   cursor: pointer;
   font-size: 0.8125rem;
   color: #2563eb;
+  font-family: inherit;
+  margin: 0;
 }
 
 .customer-list-header .export__option.--left {
