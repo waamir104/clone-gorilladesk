@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import * as XLSX from "xlsx-js-style";
+import { useNewCustomerModal } from "../context/NewCustomerModalContext";
 
 type SortColumn = "customer" | "email" | "company" | "balance";
 type SortDirection = "asc" | "desc";
@@ -98,6 +99,7 @@ export const CustomersPage = () => {
   const [internalSidebarOpen, setInternalSidebarOpen] = useState(true);
   const [sortColumn, setSortColumn] = useState<SortColumn | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+  const { openModal: openNewCustomerModal } = useNewCustomerModal();
 
   useEffect(() => {
     if (!customersLoading) return;
@@ -375,7 +377,13 @@ export const CustomersPage = () => {
                 <span className="material-symbols-outlined">publish</span>
                 Import
               </div>
-              <div className="header-items v2-btn-main btn-modal --bg-green">New Customer</div>
+              <button
+                type="button"
+                className="header-items v2-btn-main btn-modal --bg-green"
+                onClick={() => openNewCustomerModal()}
+              >
+                New Customer
+              </button>
             </div>
           </div>
 

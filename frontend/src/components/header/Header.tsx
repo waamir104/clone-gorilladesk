@@ -6,6 +6,7 @@ import {
   IconSearch,
   IconPlus,
 } from "./HeaderIcons";
+import { useNewCustomerModal } from "../../context/NewCustomerModalContext";
 
 interface HeaderProps {
   isSidebarOpen?: boolean;
@@ -44,6 +45,7 @@ const HEADER_TOOLTIP_OFFSET = 8;
 
 export const Header = ({ isSidebarOpen = true, onToggleSidebar }: HeaderProps) => {
   const { pathname } = useLocation();
+  const { openModal } = useNewCustomerModal();
   const selectedOption = getSelectedOption(pathname);
   const [isCalendarMenuOpen, setCalendarMenuOpen] = useState(false);
   const [theme, setTheme] = useState<Theme>("system");
@@ -209,7 +211,13 @@ export const Header = ({ isSidebarOpen = true, onToggleSidebar }: HeaderProps) =
             <div id="show_list_quick_add" className="v2-dropdown__menu --center">
               <ul className="relative">
                 <div className="arrow"><i className="up" /></div>
-                <li className="items has-icon" tabIndex={0}>
+                <li
+                  className="items has-icon"
+                  tabIndex={0}
+                  role="button"
+                  onClick={() => openModal()}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openModal(); } }}
+                >
                   <span className="material-symbols-outlined">person_add</span>
                   <span>New Customer</span>
                 </li>
