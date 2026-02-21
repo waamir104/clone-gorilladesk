@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { SettingsLayout } from "./settings/SettingsLayout";
 import { SettingsCompanyPage } from "./settings/SettingsCompanyPage";
+import { SettingsUsersPage } from "./settings/SettingsUsersPage";
 import { SettingsPlaceholderPage } from "./settings/SettingsPlaceholderPage";
 
 export const SettingsPage = () => {
@@ -12,7 +13,7 @@ export const SettingsPage = () => {
         <Route path="account" element={<SettingsPlaceholderPage />} />
         <Route path="plans" element={<SettingsPlaceholderPage />} />
         <Route path="invoices" element={<SettingsPlaceholderPage />} />
-        <Route path="users" element={<SettingsPlaceholderPage />} />
+        <Route path="users" element={<SettingsUsersPage />} />
         <Route path="schedules" element={<SettingsPlaceholderPage />} />
         <Route path="taxes" element={<SettingsPlaceholderPage />} />
         <Route path="items" element={<SettingsPlaceholderPage />} />
