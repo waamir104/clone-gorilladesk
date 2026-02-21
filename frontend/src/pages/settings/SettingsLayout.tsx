@@ -16,8 +16,8 @@ export const SettingsLayout = () => {
           onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
         />
       </div>
+      <SettingsSidebar ariaHidden={!sidebarOpen} />
       <div className="settings-body">
-        <SettingsSidebar ariaHidden={!sidebarOpen} />
         <div className="wrapper-columns">
           <Outlet />
         </div>
