@@ -3856,7 +3856,6 @@ section p {
   grid-template-rows: auto 1fr;
   min-height: 0;
   flex: 1;
-  overflow: hidden;
 }
 
 .container-setting.settings-sidebar-hidden.custom-grid-sidebar {
@@ -3864,6 +3863,8 @@ section p {
 }
 
 .container-setting .settings-header-full {
+  position: relative;
+  z-index: 20;
   grid-column: 1 / -1;
   min-width: 0;
 }
@@ -3937,10 +3938,12 @@ section p {
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
   font-size: 0.875rem;
   color: #374151;
   text-decoration: none;
   transition: background 0.15s;
+  border-radius: 4px;
 }
 
 .container-setting .sidebar-pages li a.items:hover {
@@ -3948,8 +3951,13 @@ section p {
 }
 
 .container-setting .sidebar-pages li a.items.active {
-  background: rgba(var(--utility-color), 0.1);
-  color: rgba(var(--utility-color), 1);
+  background: var(--selected-bg);
+  color: var(--selected-color);
+}
+
+.container-setting .sidebar-pages li a.items.active span:first-child,
+.container-setting .sidebar-pages li a.items.active .material-symbols-outlined {
+  color: var(--selected-color);
 }
 
 .container-setting .sidebar-pages .items span:first-child {
