@@ -4170,8 +4170,13 @@ section p {
 }
 
 .container-setting .header.--main .v2-dropdown__menu a.items.has-icon.active {
-  background: rgba(var(--utility-color), 0.1);
-  color: rgba(var(--utility-color), 1);
+  background: var(--selected-bg);
+  color: var(--selected-color);
+}
+
+.container-setting .header.--main .v2-dropdown__menu a.items.has-icon.active span,
+.container-setting .header.--main .v2-dropdown__menu a.items.has-icon.active .material-symbols-outlined {
+  color: var(--selected-color);
 }
 
 .container-setting .header.--main .v2-dropdown__menu .items-text {

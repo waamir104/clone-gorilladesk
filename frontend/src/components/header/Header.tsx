@@ -325,7 +325,9 @@ export const Header = ({ isSidebarOpen = true, onToggleSidebar }: HeaderProps) =
             <div className="v2-dropdown__menu user-content --right scrolls">
               <ul>
                 <li className="items has-icon">Sync to Google Calendar</li>
-                <li className="items has-icon">My Account</li>
+                <li className="items has-icon">
+                  <Link to="/app/settings/account" className="nav-dropdown-link">My Account</Link>
+                </li>
                 <li className="items has-icon">Upgrade Plan</li>
                 <li className="line" />
                 <li className="items has-icon">
